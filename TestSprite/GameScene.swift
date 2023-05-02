@@ -73,6 +73,22 @@ class GameScene: SKScene {
     private var textField2: UITextField?
     private var textField3: UITextField?
     
+    //circles
+    private var circleNode: SKShapeNode?
+    private var circleNode2: SKShapeNode?
+    private var circleNode3: SKShapeNode?
+    private var circleNode4: SKShapeNode?
+    private var circleNode5: SKShapeNode?
+    
+    private var firstCircleClicked = false
+    private var secondCircleClicked = false
+    private var thirdCircleClicked = false
+    private var fourthCircleClicked = false
+    private var fifthCircleClicked = false
+    
+    private var lieLabel: SKLabelNode?
+    private var checkListLabel: SKLabelNode?
+    
     override func didMove(to view: SKView) {
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
         let background = SKSpriteNode(imageNamed: "Mini")
@@ -178,7 +194,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
-        
+            
         if diceButton?.contains(touchLocation) == true {
             var currentPlayer = playersDataArray[currentPlayerIndex]
             // print(currentPlayer)
@@ -238,7 +254,7 @@ class GameScene: SKScene {
                 if count == 7 {
                     count2 += 1
                     if count2 == 3 {
-                        self?.addPopUpContainer2()
+                        self?.addPopUpContainer()
                         timer.invalidate()
                         return
                     }
@@ -274,8 +290,108 @@ class GameScene: SKScene {
             print(cardArray[self.move].firstPrompt)
             print(cardArray[self.move].secondPrompt)
             print(cardArray[self.move].thirdPrompt)
+        } else if circleNode?.contains(touchLocation) == true {
+            firstCircleClicked.toggle()
+            
+            //check list label on circle
+            checkListLabel = SKLabelNode(text: "✓")
+            checkListLabel?.fontName = "AvenirNext-Bold"
+            checkListLabel?.fontColor = .white
+            checkListLabel?.fontSize = 50
+            checkListLabel?.position = CGPoint(x: 0, y: -17)
+            
+            if firstCircleClicked {
+                checkListLabel?.removeFromParent()
+                circleNode?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+                circleNode?.addChild(checkListLabel!)
+                
+                circleNode2?.fillColor = UIColor.white
+                secondCircleClicked = false
+            }
+            
+        } else if circleNode2?.contains(touchLocation) == true {
+            secondCircleClicked.toggle()
+            
+            //check list label on circle
+            checkListLabel = SKLabelNode(text: "✓")
+            checkListLabel?.fontName = "AvenirNext-Bold"
+            checkListLabel?.fontColor = .white
+            checkListLabel?.fontSize = 50
+            checkListLabel?.position = CGPoint(x: 0, y: -17)
+            
+            if secondCircleClicked {
+                checkListLabel?.removeFromParent()
+                circleNode2?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+                circleNode2?.addChild(checkListLabel!)
+                
+                circleNode?.fillColor = UIColor.white
+                firstCircleClicked = false
+            }
+        } else if circleNode3?.contains(touchLocation) == true {
+            thirdCircleClicked.toggle()
+            
+            //check list label on circle
+            lieLabel = SKLabelNode(text: "LIE")
+            lieLabel?.fontName = "AvenirNext-Bold"
+            lieLabel?.fontColor = .white
+            lieLabel?.fontSize = 30
+            lieLabel?.position = CGPoint(x: 0, y: -10)
+            
+            if thirdCircleClicked {
+                lieLabel?.removeFromParent()
+                circleNode3?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+                circleNode3?.addChild(lieLabel!)
+                
+                circleNode4?.fillColor = UIColor.white
+                circleNode5?.fillColor = UIColor.white
+                
+                fourthCircleClicked = false
+                fifthCircleClicked = false
+            }
+        } else if circleNode4?.contains(touchLocation) == true {
+            fourthCircleClicked.toggle()
+            
+            //check list label on circle
+            lieLabel = SKLabelNode(text: "LIE")
+            lieLabel?.fontName = "AvenirNext-Bold"
+            lieLabel?.fontColor = .white
+            lieLabel?.fontSize = 30
+            lieLabel?.position = CGPoint(x: 0, y: -10)
+            
+            if fourthCircleClicked {
+                lieLabel?.removeFromParent()
+                circleNode4?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+                circleNode4?.addChild(lieLabel!)
+                
+                circleNode3?.fillColor = UIColor.white
+                circleNode5?.fillColor = UIColor.white
+                
+                thirdCircleClicked = false
+                fifthCircleClicked = false
+            }
+        } else if circleNode5?.contains(touchLocation) == true {
+            fifthCircleClicked.toggle()
+            
+            //check list label on circle
+            lieLabel = SKLabelNode(text: "LIE")
+            lieLabel?.fontName = "AvenirNext-Bold"
+            lieLabel?.fontColor = .white
+            lieLabel?.fontSize = 30
+            lieLabel?.position = CGPoint(x: 0, y: -10)
+            
+            if fifthCircleClicked {
+                lieLabel?.removeFromParent()
+                circleNode5?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+                circleNode5?.addChild(lieLabel!)
+                
+                circleNode3?.fillColor = UIColor.white
+                circleNode4?.fillColor = UIColor.white
+                
+                thirdCircleClicked = false
+                fourthCircleClicked = false
+            }
         }
-        //        }
+        
     }
     
     func addPopUpContainer() {
@@ -316,15 +432,14 @@ class GameScene: SKScene {
         textField?.placeholder = "Enter your prompt"
         textField?.layer.cornerRadius = textFieldFrame.size.height / 2
         
-        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: textFieldFrame.size.height, height: textFieldFrame.size.height))
-        circleView.backgroundColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-        circleView.layer.cornerRadius = circleView.frame.size.height / 2
-        circleView.layer.position = CGPoint(x: -60, y: 36)
-        textField?.addSubview(circleView)
-        
         let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField?.leftView = leftPaddingView
         textField?.leftViewMode = .always
+        
+        circleNode3 = SKShapeNode(circleOfRadius: 40)
+        circleNode3?.fillColor = UIColor.white
+        circleNode3?.lineWidth = 2
+        circleNode3?.position = CGPoint(x: -370, y: 132)
         
         //second text field
         let textField2Frame = CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: 600, height: 70))
@@ -333,16 +448,15 @@ class GameScene: SKScene {
         textField2?.placeholder = "Enter your prompt"
         textField2?.layer.cornerRadius = textFieldFrame.size.height / 2
         
-        let circle2View = UIView(frame: CGRect(x: 0, y: 0, width: textFieldFrame.size.height, height: textFieldFrame.size.height))
-        circle2View.backgroundColor = .white
-        circle2View.layer.cornerRadius = circle2View.frame.size.height / 2
-        circle2View.layer.position = CGPoint(x: -60, y: 37)
-        textField2?.addSubview(circle2View)
-        
         let leftPadding2View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField2?.leftView = leftPadding2View
         textField2?.leftViewMode = .always
-
+        
+        circleNode4 = SKShapeNode(circleOfRadius: 40)
+        circleNode4?.fillColor = UIColor.white
+        circleNode4?.lineWidth = 2
+        circleNode4?.position = CGPoint(x: -370, y: 15)
+        
         //third text field
         let textField3Frame = CGRect(origin: CGPoint(x: 0, y: 200), size: CGSize(width: 600, height: 70))
         textField3 = UITextField(frame: textField3Frame)
@@ -350,15 +464,14 @@ class GameScene: SKScene {
         textField3?.placeholder = "Enter your prompt"
         textField3?.layer.cornerRadius = textFieldFrame.size.height / 2
         
-        let circle3View = UIView(frame: CGRect(x: 0, y: 0, width: textFieldFrame.size.height, height: textFieldFrame.size.height))
-        circle3View.backgroundColor = .white
-        circle3View.layer.cornerRadius = circle3View.frame.size.height / 2
-        circle3View.layer.position = CGPoint(x: -60, y: 37)
-        textField3?.addSubview(circle3View)
-        
         let leftPadding3View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField3?.leftView = leftPadding3View
         textField3?.leftViewMode = .always
+        
+        circleNode5 = SKShapeNode(circleOfRadius: 40)
+        circleNode5?.fillColor = UIColor.white
+        circleNode5?.lineWidth = 2
+        circleNode5?.position = CGPoint(x: -370, y: -103)
         
         //frame for text field
         let sceneFrame = CGRect(origin: .zero, size: CGSize(width: 520, height: 300))
@@ -378,19 +491,13 @@ class GameScene: SKScene {
             popUpContainer?.inputView?.addSubview(skView!)
         }
         
-        //lie label on circle
-        let label = UILabel(frame: circleView.bounds)
-        label.text = "LIE"
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = UIFont(name: "AvenirNext-Bold", size: 24)
-        label.transform = CGAffineTransform(rotationAngle: CGFloat.pi / -4)
-        circleView.addSubview(label)
-        
         addChild(popUpContainer!)
+        buttonFrame?.addChild(buttonLabel!)
         popUpContainer?.addChild(buttonFrame!)
         popUpContainer?.addChild(titleLabel)
-        buttonFrame?.addChild(buttonLabel!)
+        popUpContainer?.addChild(circleNode3!)
+        popUpContainer?.addChild(circleNode4!)
+        popUpContainer?.addChild(circleNode5!)
     }
     
     func addPopUpContainer2() {
@@ -431,15 +538,14 @@ class GameScene: SKScene {
         textField?.placeholder = "Enter your prompt"
         textField?.layer.cornerRadius = textFieldFrame.size.height / 2
         
-        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: textFieldFrame.size.height, height: textFieldFrame.size.height))
-        circleView.backgroundColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-        circleView.layer.cornerRadius = circleView.frame.size.height / 2
-        circleView.layer.position = CGPoint(x: -60, y: 36)
-        textField?.addSubview(circleView)
-        
         let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField?.leftView = leftPaddingView
         textField?.leftViewMode = .always
+        
+        circleNode = SKShapeNode(circleOfRadius: 40)
+        circleNode?.fillColor = UIColor.white
+        circleNode?.lineWidth = 2
+        circleNode?.position = CGPoint(x: -370, y: 75)
         
         //second text field
         let textField2Frame = CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: 600, height: 70))
@@ -448,15 +554,14 @@ class GameScene: SKScene {
         textField2?.placeholder = "Enter your prompt"
         textField2?.layer.cornerRadius = textFieldFrame.size.height / 2
         
-        let circle2View = UIView(frame: CGRect(x: 0, y: 0, width: textFieldFrame.size.height, height: textFieldFrame.size.height))
-        circle2View.backgroundColor = .white
-        circle2View.layer.cornerRadius = circle2View.frame.size.height / 2
-        circle2View.layer.position = CGPoint(x: -60, y: 37)
-        textField2?.addSubview(circle2View)
-        
         let leftPadding2View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField2?.leftView = leftPadding2View
         textField2?.leftViewMode = .always
+        
+        circleNode2 = SKShapeNode(circleOfRadius: 40)
+        circleNode2?.fillColor = UIColor.white
+        circleNode2?.lineWidth = 2
+        circleNode2?.position = CGPoint(x: -370, y: -40)
         
         //frame for text field
         let sceneFrame = CGRect(origin: .zero, size: CGSize(width: 520, height: 200))
@@ -475,18 +580,12 @@ class GameScene: SKScene {
             popUpContainer?.inputView?.addSubview(skView!)
         }
         
-        //check label on circle
-        let label = UILabel(frame: circleView.bounds)
-        label.text = "✓"
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = UIFont(name: "AvenirNext-Bold", size: 40)
-        circleView.addSubview(label)
-        
         addChild(popUpContainer!)
         popUpContainer?.addChild(titleLabel)
         popUpContainer?.addChild(buttonFrame!)
         popUpContainer?.addChild(buttonLabel!)
+        popUpContainer?.addChild(circleNode!)
+        popUpContainer?.addChild(circleNode2!)
     }
     
     func addPopUpContainer3() {
