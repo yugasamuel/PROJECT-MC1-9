@@ -21,6 +21,7 @@ class MyObject {
     func setPosition(position: CGPoint) {
         objPosition = position
         print("Objek diposisikan di \(objPosition)")
+        print("update")
     }
 }
 
