@@ -22,6 +22,7 @@ class MyObject {
         objPosition = position
         print("Objek diposisikan di \(objPosition)")
         print("update")
+        print("update indah")
     }
 }
 
