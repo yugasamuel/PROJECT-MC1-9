@@ -51,6 +51,7 @@ class GameScene: SKScene {
     public var diceNumber: Int = 1
     public var diceNumberFix: Int = 1
     public var coin: Int = 750
+    
     //    public var players = [Player]()
     public var currentPlayerIndex = 0
     private var skip = 5
@@ -261,7 +262,7 @@ class GameScene: SKScene {
                 if count == 7 {
                     count2 += 1
                     if count2 == 3 {
-                        self?.addBuyOfferPopUp()
+                        self?.addPopUpContainer()
                         timer.invalidate()
                         return
                     }
