@@ -263,7 +263,7 @@ class GameScene: SKScene {
                 if count == 7 {
                     count2 += 1
                     if count2 == 3 {
-                        self?.addPopUpContainer()
+                        self?.addChallengePopUp()
                         timer.invalidate()
                         return
                     }
@@ -723,6 +723,52 @@ class GameScene: SKScene {
         popUpContainer?.addChild(skipButtonLabel!)
         popUpContainer?.addChild(skipButtonFrame!)
         popUpContainer?.addChild(coinImage)
+    }
+    
+    func addChallengePopUp() {
+        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 350))
+        popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        popUpContainer?.zPosition = 1
+        
+        //background for popUpContainer
+        let cornerRadius = CGFloat(50)
+        let roundedRect = CGRect(x: -popUpContainer!.size.width / 2, y: -popUpContainer!.size.height / 2, width: popUpContainer!.size.width, height: popUpContainer!.size.height)
+        let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
+        let shape = SKShapeNode(path: path.cgPath)
+        shape.fillColor = UIColor(red: 203/255, green: 218/255, blue: 224/255, alpha: 100)
+        popUpContainer?.addChild(shape)
+        
+        //title
+        let titleLabel = SKLabelNode(text: "CHALLENGE")
+        titleLabel.fontName = "AvenirNext-Bold"
+        titleLabel.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        titleLabel.fontSize = 55
+        titleLabel.position = CGPoint(x: 0, y: 100)
+        
+        //challenge label
+        let challengeNameLabel = SKLabelNode(text: "What is the one thing that you have always wanted to do but have been too afraid to try?")
+        challengeNameLabel.fontName = "AvenirNext"
+        challengeNameLabel.fontColor = UIColor.black
+        challengeNameLabel.fontSize = 25
+        challengeNameLabel.position = CGPoint(x: 0, y: 10)
+        challengeNameLabel.numberOfLines = 2
+        
+        //next button
+        buttonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
+        buttonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        buttonFrame?.position = CGPoint(x: 0, y: -105)
+        
+        buttonLabel = SKLabelNode(text: "DONE")
+        buttonLabel?.fontName = "AvenirNext-Bold"
+        buttonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        buttonLabel?.fontSize = 50
+        buttonLabel?.position = CGPoint(x: 0, y: -125)
+        
+        addChild(popUpContainer!)
+        popUpContainer?.addChild(titleLabel)
+        popUpContainer?.addChild(challengeNameLabel)
+        popUpContainer?.addChild(buttonLabel!)
+        popUpContainer?.addChild(buttonFrame!)
     }
     
     override func didEvaluateActions() {

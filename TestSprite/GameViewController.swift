@@ -28,22 +28,21 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
 
             // Create a new UIView for the player info
-            var playerInfoView1 = UIView(frame: CGRect(x: 15, y: 13, width: 348, height: 153))
-            var playerInfoView2 = UIView(frame: CGRect(x: 831, y: 13, width: 348, height: 153))
-            var playerInfoView3 = UIView(frame: CGRect(x: 831, y: 666, width: 348, height: 153))
-            var playerInfoView4 = UIView(frame: CGRect(x: 15, y: 666, width: 348, height: 153))
+            var playerInfoView1 = UIView(frame: CGRect(x: 15, y: 13, width: 348, height: 150))
+            var playerInfoView2 = UIView(frame: CGRect(x: 831, y: 13, width: 348, height: 150))
+            var playerInfoView3 = UIView(frame: CGRect(x: 831, y: 666, width: 348, height: 150))
+            var playerInfoView4 = UIView(frame: CGRect(x: 15, y: 666, width: 348, height: 150))
             
-            let playerInfoView1Background = UIImageView(frame: CGRect(x: 15, y: 14, width: 348, height: 153))
+            let playerInfoView1Background = UIImageView(frame: CGRect(x: 15, y: 14, width: 348, height: 150))
             playerInfoView1Background.image = UIImage(named: "background_player_info")
             
-            let playerInfoView2Background = UIImageView(frame: CGRect(x: 831, y: 13, width: 348, height: 153))
+            let playerInfoView2Background = UIImageView(frame: CGRect(x: 831, y: 13, width: 348, height: 150))
+            playerInfoView1Background.image = UIImage(named: "background_player_info")
+        
+            let playerInfoView3Background = UIImageView(frame: CGRect(x: 831, y: 666, width: 348, height: 150))
             playerInfoView1Background.image = UIImage(named: "background_player_info")
             
-            
-            let playerInfoView3Background = UIImageView(frame: CGRect(x: 831, y: 666, width: 348, height: 153))
-            playerInfoView1Background.image = UIImage(named: "background_player_info")
-            
-            let playerInfoView4Background = UIImageView(frame: CGRect(x: 15, y: 656, width: 348, height: 153))
+            let playerInfoView4Background = UIImageView(frame: CGRect(x: 15, y: 656, width: 348, height: 150))
             playerInfoView1Background.image = UIImage(named: "background_player_info")
             
             // Set the background color of the view
