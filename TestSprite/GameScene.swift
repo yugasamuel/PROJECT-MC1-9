@@ -75,7 +75,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
-        let background = SKSpriteNode(imageNamed: "Mini")
+        let background = SKSpriteNode(imageNamed: "mini2")
         background.position = CGPoint(x: 0, y: 0)
         background.size = self.size
         background.zPosition = -1
@@ -90,36 +90,37 @@ class GameScene: SKScene {
         
         //------------------------------------BOARD CARD INITIATION--------------------------------------
         for _ in 0..<25 {
-            let tileNode = SKSpriteNode(color: transparant, size: CGSize(width: tileWidth, height: tileHeight))
+            let tileNode = SKSpriteNode(color: .black, size: CGSize(width: tileWidth, height: tileHeight))
             boardNode.addChild(tileNode)
             boardNodes.append(tileNode)
         }
         
-        boardNodes[0].position = CGPoint(x: 150 , y: 0) //START
-        boardNodes[1].position = CGPoint(x: 250 , y: -140) //HOME
-        boardNodes[2].position = CGPoint(x: 340 , y: -220) //WY
-        boardNodes[3].position = CGPoint(x: 460 , y: -220) //RandomCHallenge
-        boardNodes[4].position = CGPoint(x: 560 , y: -140) //2T1L
-        boardNodes[5].position = CGPoint(x: 580 , y: 0) // WY
-        boardNodes[6].position = CGPoint(x: 510 , y: 120) //ToD
-        boardNodes[7].position = CGPoint(x: 395 , y: 130) //RandomChallenge
-        boardNodes[8].position = CGPoint(x: 265 , y: 95) //2T1L
-        boardNodes[9].position = CGPoint(x: 70 , y: -150) //TOD
-        boardNodes[10].position = CGPoint(x: -10 , y: -250) //WY
-        boardNodes[11].position = CGPoint(x: -120 , y: -300) //RandomChallenge
-        boardNodes[12].position = CGPoint(x: -230 , y: -330) //WY
-        boardNodes[13].position = CGPoint(x: -340 , y: -300) //ToD
-        boardNodes[14].position = CGPoint(x: -450 , y: -250) //ToD
-        boardNodes[15].position = CGPoint(x: -530 , y: -170) //RandomChallenge
-        boardNodes[16].position = CGPoint(x: -580 , y: -60) //ForceMove
-        boardNodes[17].position = CGPoint(x: -590 , y: 60) //2T1l
-        boardNodes[18].position = CGPoint(x: -540 , y: 170) //2T1L
-        boardNodes[19].position = CGPoint(x: -450 , y: 250) //RandomChallenge
-        boardNodes[20].position = CGPoint(x: -340 , y: 290) //WY
-        boardNodes[21].position = CGPoint(x: -220 , y: 320) //2T1L
-        boardNodes[22].position = CGPoint(x: -90 , y: 290) //ToD
-        boardNodes[23].position = CGPoint(x: 5 , y: 220) //RandomChallenge
-        boardNodes[24].position = CGPoint(x: 90 , y: 110) //LetGo
+        boardNodes[0].position = CGPoint(x: 130 , y: -10) //START
+        boardNodes[1].position = CGPoint(x: 190 , y: -110) //HOME
+//        250,150
+        boardNodes[2].position = CGPoint(x: 280 , y: -170) //WY
+        boardNodes[3].position = CGPoint(x: 380 , y: -180) //RandomCHallenge
+        boardNodes[4].position = CGPoint(x: 450 , y: -120) //2T1L
+        boardNodes[5].position = CGPoint(x: 470 , y: 0) // WY
+        boardNodes[6].position = CGPoint(x: 420 , y: 80) //ToD
+        boardNodes[7].position = CGPoint(x: 320 , y: 110) //RandomChallenge
+        boardNodes[8].position = CGPoint(x: 210 , y: 60) //2T1L
+        boardNodes[9].position = CGPoint(x: 60 , y: -130) //TOD
+        boardNodes[10].position = CGPoint(x: -10 , y: -210) //WY
+        boardNodes[11].position = CGPoint(x: -90 , y: -250) //RandomChallenge
+        boardNodes[12].position = CGPoint(x: -180 , y: -270) //WY
+        boardNodes[13].position = CGPoint(x: -270 , y: -240) //ToD
+        boardNodes[14].position = CGPoint(x: -355 , y: -205) //ToD
+        boardNodes[15].position = CGPoint(x: -425 , y: -135) //RandomChallenge
+        boardNodes[16].position = CGPoint(x: -460 , y: -50) //ForceMove
+        boardNodes[17].position = CGPoint(x: -470 , y: 40) //2T1l
+        boardNodes[18].position = CGPoint(x: -425 , y: 135) //2T1L
+        boardNodes[19].position = CGPoint(x: -360 , y: 200) //RandomChallenge
+        boardNodes[20].position = CGPoint(x: -270 , y: 240) //WY
+        boardNodes[21].position = CGPoint(x: -170 , y: 260) //2T1L
+        boardNodes[22].position = CGPoint(x: -80 , y: 240) //ToD
+        boardNodes[23].position = CGPoint(x: 10 , y: 180) //RandomChallenge
+        boardNodes[24].position = CGPoint(x: 70 , y: 90) //LetGo
         
         let startingBoardNode = boardNodes[0] // assuming you have an array of board nodes
         
@@ -136,7 +137,7 @@ class GameScene: SKScene {
         var diceButtonTexture = SKTexture(imageNamed: "dice\(diceNumber)")
         diceButton = SKSpriteNode(texture: diceButtonTexture)
         diceButton?.size = CGSize(width: 200, height: 200)
-        diceButton?.position = CGPoint(x: -220, y: 0)
+        diceButton?.position = CGPoint(x: -180, y: 0)
         addChild(diceButton!)
         
         // ------------------------------------POP UP CONTAINER----------------------------------------------
