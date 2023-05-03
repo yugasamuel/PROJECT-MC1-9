@@ -66,6 +66,10 @@ class GameScene: SKScene {
     private var skipButtonFrame: SKShapeNode?
     private var buyButtonLabel: SKLabelNode?
     private var buyButtonFrame: SKShapeNode?
+    private var truthButtonLabel: SKLabelNode?
+    private var truthButtonFrame: SKShapeNode?
+    private var dareButtonLabel: SKLabelNode?
+    private var dareButtonFrame: SKShapeNode?
     
     private var skView: SKView?
     
@@ -97,6 +101,8 @@ class GameScene: SKScene {
     private var checkListLabel: SKLabelNode?
     private var selectedPrompt: String = "firstPrompt"
     
+    private var challengeName: String = "Truth or Dare"
+    
     override func didMove(to view: SKView) {
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
         let background = SKSpriteNode(imageNamed: "mini2")
@@ -121,7 +127,6 @@ class GameScene: SKScene {
         
         boardNodes[0].position = CGPoint(x: 130 , y: -10) //START
         boardNodes[1].position = CGPoint(x: 190 , y: -110) //HOME
-//        250,150
         boardNodes[2].position = CGPoint(x: 280 , y: -170) //WY
         boardNodes[3].position = CGPoint(x: 380 , y: -180) //RandomCHallenge
         boardNodes[4].position = CGPoint(x: 450 , y: -120) //2T1L
@@ -259,16 +264,16 @@ class GameScene: SKScene {
                 })
             }
             
-            let popUpTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] timer in
-                if count == 7 {
-                    count2 += 1
-                    if count2 == 3 {
-                        self?.addChallengePopUp()
-                        timer.invalidate()
-                        return
-                    }
-                }
-            }
+//            let popUpTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] timer in
+//                if count == 7 {
+//                    count2 += 1
+//                    if count2 == 3 {
+//                        self?.addTODPopUp()
+//                        timer.invalidate()
+//                        return
+//                    }
+//                }
+//            }
             
         } else if buttonFrame?.contains(touchLocation) == true {
             popUpContainer?.removeFromParent()
@@ -400,6 +405,12 @@ class GameScene: SKScene {
             thirdCircleClicked = false
             fourthCircleClicked = false
             
+        } else if dareButtonFrame?.contains(touchLocation) == true {
+            popUpContainer?.removeFromParent()
+            addPopUpContainer3(title: "DARE")
+        } else if truthButtonFrame?.contains(touchLocation) == true {
+            popUpContainer?.removeFromParent()
+            addPopUpContainer3(title: "TRUTH")
         }
         
     }
@@ -598,7 +609,7 @@ class GameScene: SKScene {
         popUpContainer?.addChild(circleNode2!)
     }
     
-    func addPopUpContainer3() {
+    func addPopUpContainer3(title: String) {
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 380))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -612,7 +623,7 @@ class GameScene: SKScene {
         popUpContainer?.addChild(shape)
         
         //title
-        let titleLabel = SKLabelNode(text: "TRUTH OR DARE")
+        let titleLabel = SKLabelNode(text: title)
         titleLabel.fontName = "AvenirNext-Bold"
         titleLabel.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
         titleLabel.fontSize = 55
@@ -682,7 +693,7 @@ class GameScene: SKScene {
         titleLabel.fontSize = 55
         titleLabel.position = CGPoint(x: 0, y: 80)
         
-        let challengeNameLabel = SKLabelNode(text: "Would You Rather")
+        let challengeNameLabel = SKLabelNode(text: challengeName)
         challengeNameLabel.fontName = "AvenirNext-Bold"
         challengeNameLabel.fontColor = UIColor(red: 53/255, green: 157/255, blue: 158/255, alpha: 100)
         challengeNameLabel.fontSize = 55
@@ -746,11 +757,11 @@ class GameScene: SKScene {
         titleLabel.position = CGPoint(x: 0, y: 100)
         
         //challenge label
-        let challengeNameLabel = SKLabelNode(text: "What is the one thing that you have always wanted to do but have been too afraid to try?")
+        let challengeNameLabel = SKLabelNode(text: "What is the one thing that you have always wanted\nto do but have been too afraid to try?")
         challengeNameLabel.fontName = "AvenirNext"
         challengeNameLabel.fontColor = UIColor.black
         challengeNameLabel.fontSize = 25
-        challengeNameLabel.position = CGPoint(x: 0, y: 10)
+        challengeNameLabel.position = CGPoint(x: 0, y: -10)
         challengeNameLabel.numberOfLines = 2
         
         //next button
@@ -771,17 +782,68 @@ class GameScene: SKScene {
         popUpContainer?.addChild(buttonFrame!)
     }
     
+    func addTODPopUp() {
+        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 800, height: 200))
+        popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        popUpContainer?.zPosition = 1
+        
+        //background for popUpContainer
+        let cornerRadius = CGFloat(50)
+        let roundedRect = CGRect(x: -popUpContainer!.size.width / 2, y: -popUpContainer!.size.height / 2, width: popUpContainer!.size.width, height: popUpContainer!.size.height)
+        let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
+        let shape = SKShapeNode(path: path.cgPath)
+        shape.fillColor = UIColor(red: 203/255, green: 218/255, blue: 224/255, alpha: 100)
+        popUpContainer?.addChild(shape)
+        
+        //OR label
+        let titleLabel = SKLabelNode(text: "OR")
+        titleLabel.fontName = "AvenirNext-Bold"
+        titleLabel.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        titleLabel.fontSize = 40
+        titleLabel.position = CGPoint(x: 0, y: -17)
+
+        //skip button
+        dareButtonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
+        dareButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        dareButtonFrame?.position = CGPoint(x: 190, y: 0)
+            
+        dareButtonLabel = SKLabelNode(text: "DARE")
+        dareButtonLabel?.fontName = "AvenirNext-Bold"
+        dareButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        dareButtonLabel?.fontSize = 50
+        dareButtonLabel?.position = CGPoint(x: 190, y: -17)
+        
+        //buy button
+        truthButtonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
+        truthButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        truthButtonFrame?.position = CGPoint(x: -188, y: 0)
+        
+        truthButtonLabel = SKLabelNode(text: "TRUTH")
+        truthButtonLabel?.fontName = "AvenirNext-Bold"
+        truthButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        truthButtonLabel?.fontSize = 50
+        truthButtonLabel?.position = CGPoint(x: -188, y: -17)
+        
+        addChild(popUpContainer!)
+        popUpContainer?.addChild(titleLabel)
+        popUpContainer?.addChild(dareButtonFrame!)
+        popUpContainer?.addChild(dareButtonLabel!)
+        popUpContainer?.addChild(truthButtonFrame!)
+        popUpContainer?.addChild(truthButtonLabel!)
+    }
+    
     override func didEvaluateActions() {
         var objPosition = myObject.objPosition
-        if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150)) && countShown == 0 {
-            let alertController = UIAlertController(title: "Konfirmasi", message: "Do you want to buy this card?", preferredStyle: .alert)
+        if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150) || (objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
+            challengeName = "2 Truth 1 Lie"
+            let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
             
-            let yesAction = UIAlertAction(title: "Yes", style: .default) { [weak self] (_) in
+            let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
                 self?.buy = true
-                self?.addPopUpContainer()
+                self?.addPopUpContainer()  //2t1l
             }
             
-            let noAction = UIAlertAction(title: "No", style: .cancel) { [weak self] (_) in
+            let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
                 self?.buy = false
                 //                self?.countShown = 1
             }
@@ -790,6 +852,60 @@ class GameScene: SKScene {
             
             view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
             
+            countShown = 1
+        } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240) || (objPosition.x == -470 && objPosition.y == 40)) && countShown == 0 {
+            challengeName = "Would You Rather"
+            let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+            
+            let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                self?.buy = true
+                self?.addPopUpContainer2()  //wyr
+            }
+            
+            let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                self?.buy = false
+                //                self?.countShown = 1
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            
+            view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            
+            countShown = 1
+        } else if ((objPosition.x == 420 && objPosition.y == 80) || (objPosition.x == 60 && objPosition.y == -130) || (objPosition.x == -270 && objPosition.y == -240) || (objPosition.x == -355 && objPosition.y == -205) || (objPosition.x == -80 && objPosition.y == 240)) && countShown == 0 {
+            challengeName = "Truth or Dare"
+            let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+            
+            let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                self?.buy = true
+                self?.addTODPopUp()  //tod
+            }
+            
+            let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                self?.buy = false
+                //  self?.countShown = 1
+                //  new
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            
+            view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            
+            countShown = 1
+        } else if ((objPosition.x == 380 && objPosition.y == -180) || (objPosition.x == 320 && objPosition.y == 110) || (objPosition.x == -90 && objPosition.y == -250) || (objPosition.x == -425 && objPosition.y == -135) || (objPosition.x == -360 && objPosition.y == 200) || (objPosition.x == 10 && objPosition.y == 180)) && countShown == 0 {
+            self.addChallengePopUp()   //challenge
+            countShown = 1
+        } else if ((objPosition.x == 190 && objPosition.y == -110)) && countShown == 0 {
+            print("Nyampe Safe House")  //safe house
+            countShown = 1
+        } else if ((objPosition.x == -460 && objPosition.y == -50)) && countShown == 0 {
+            print("Nyampe Force Move")  //Force Move
+            countShown = 1
+        } else if ((objPosition.x == 70 && objPosition.y == 90)) && countShown == 0 {
+            print("Nyampe Let Go")  //Let Go
+            countShown = 1
+        } else if ((objPosition.x == 130 && objPosition.y == -10)) && countShown == 0 {
+            print("Nyampe Start")  //Start
             countShown = 1
         }
     }
@@ -826,7 +942,7 @@ class GameScene: SKScene {
         //        }
         
         if cardArray[move].cardOwner == "Null" {
-            if cardArray[move].cardChallengesType == "2T1l" {
+            if cardArray[move].cardChallengesType == "2 Truth 1 Lie" {
                 if coinz >= 150 {
                     coinz -= 150
                     cardArray[move].cardOwner = player
@@ -835,7 +951,7 @@ class GameScene: SKScene {
                     print("gapunya duit")
                 }
             }
-            else if cardArray[move].cardChallengesType == "TOD" {
+            else if cardArray[move].cardChallengesType == "Truth or Dare" {
                 if coinz >= 180 {
                     coinz -= 180
                     cardArray[move].cardOwner = player
@@ -844,7 +960,7 @@ class GameScene: SKScene {
                     print("gapunya duit")
                 }
             }
-            else if cardArray[move].cardChallengesType == "WY" {
+            else if cardArray[move].cardChallengesType == "Would You Rather" {
                 if coinz >= 120 {
                     coinz -= 120
                     cardArray[move].cardOwner = player
@@ -858,7 +974,7 @@ class GameScene: SKScene {
             }
         }
         else {
-            if cardArray[move].cardChallengesType == "2T1l" {
+            if cardArray[move].cardChallengesType == "2 Truth 1 Lie" {
                 if buy == true {
                     if coinz >= 200 {
                         coinz -= 200
@@ -877,7 +993,7 @@ class GameScene: SKScene {
                     }
                 }
             }
-            else if cardArray[move].cardChallengesType == "TOD" {
+            else if cardArray[move].cardChallengesType == "Truth or Dare" {
                 if buy == true {
                     if coinz >= 230 {
                         coinz -= 230
@@ -896,7 +1012,7 @@ class GameScene: SKScene {
                     }
                 }
             }
-            else if cardArray[move].cardChallengesType == "WY" {
+            else if cardArray[move].cardChallengesType == "Would You Rather" {
                 if buy == true {
                     if coinz >= 180 {
                         coinz -= 180
