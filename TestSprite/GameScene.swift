@@ -14,6 +14,7 @@ import UIKit
 var cardArray = Card.cardData // inisiasi array
 var playersDataArray = PlayersData.sampleData // inisiasi array
 var buy : Bool = true
+var challenges = Challenge.allValues // inisiasi challenge
 
 class MyObject {
     var objPosition: CGPoint = .zero
@@ -268,7 +269,7 @@ class GameScene: SKScene {
 //                if count == 7 {
 //                    count2 += 1
 //                    if count2 == 3 {
-//                        self?.addTODPopUp()
+//                        self?.addChallengePopUp()
 //                        timer.invalidate()
 //                        return
 //                    }
@@ -737,7 +738,7 @@ class GameScene: SKScene {
     }
     
     func addChallengePopUp() {
-        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 350))
+        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1150, height: 350))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
         
@@ -756,13 +757,19 @@ class GameScene: SKScene {
         titleLabel.fontSize = 55
         titleLabel.position = CGPoint(x: 0, y: 100)
         
+        //sub title label
+        let subTitleLabel = SKLabelNode(text: "Please tell us...")
+        subTitleLabel.fontName = "AvenirNext"
+        subTitleLabel.fontColor = UIColor.black
+        subTitleLabel.fontSize = 25
+        subTitleLabel.position = CGPoint(x: 0, y: 40)
+        
         //challenge label
-        let challengeNameLabel = SKLabelNode(text: "What is the one thing that you have always wanted\nto do but have been too afraid to try?")
+        let challengeNameLabel = SKLabelNode(text: challenges.randomElement()?.challengePrompt)
         challengeNameLabel.fontName = "AvenirNext"
         challengeNameLabel.fontColor = UIColor.black
         challengeNameLabel.fontSize = 25
-        challengeNameLabel.position = CGPoint(x: 0, y: -10)
-        challengeNameLabel.numberOfLines = 2
+        challengeNameLabel.position = CGPoint(x: 0, y: -15)
         
         //next button
         buttonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
@@ -777,6 +784,7 @@ class GameScene: SKScene {
         
         addChild(popUpContainer!)
         popUpContainer?.addChild(titleLabel)
+        popUpContainer?.addChild(subTitleLabel)
         popUpContainer?.addChild(challengeNameLabel)
         popUpContainer?.addChild(buttonLabel!)
         popUpContainer?.addChild(buttonFrame!)
