@@ -19,6 +19,7 @@
 		4BE8AC6529F2E48D00AE08FD /* TestSpriteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8AC6429F2E48D00AE08FD /* TestSpriteUITests.swift */; };
 		4BE8AC6729F2E48D00AE08FD /* TestSpriteUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8AC6629F2E48D00AE08FD /* TestSpriteUITestsLaunchTests.swift */; };
 		4BE8AC7429F2E65500AE08FD /* Mini 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE8AC7329F2E65500AE08FD /* Mini 1.png */; };
+		65100C0E2A0159FD00993274 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 65100C0D2A0159FD00993274 /* coin.png */; };
 		BA0CE7AC29F69F5500A8D598 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BA0CE7AB29F69F5400A8D598 /* Base.lproj */; };
 		BAE3800129FA2AE4002502BC /* PlayersAndCardInitiation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE3800029FA2AE4002502BC /* PlayersAndCardInitiation.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		4BE8AC6429F2E48D00AE08FD /* TestSpriteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSpriteUITests.swift; sourceTree = "<group>"; };
 		4BE8AC6629F2E48D00AE08FD /* TestSpriteUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSpriteUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4BE8AC7329F2E65500AE08FD /* Mini 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Mini 1.png"; sourceTree = "<group>"; };
+		65100C0D2A0159FD00993274 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		BA0CE7AB29F69F5400A8D598 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Base.lproj; sourceTree = "<group>"; };
 		BAE3800029FA2AE4002502BC /* PlayersAndCardInitiation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersAndCardInitiation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 				4BE8AC4629F2E48C00AE08FD /* GameScene.swift */,
 				BAE3800029FA2AE4002502BC /* PlayersAndCardInitiation.swift */,
 				4BE8AC7329F2E65500AE08FD /* Mini 1.png */,
+				65100C0D2A0159FD00993274 /* coin.png */,
 				4BE8AC4829F2E48C00AE08FD /* GameViewController.swift */,
 				4BE8AC4A29F2E48C00AE08FD /* Main.storyboard */,
 				4BE8AC4D29F2E48D00AE08FD /* Assets.xcassets */,
@@ -248,6 +251,7 @@
 				BA0CE7AC29F69F5500A8D598 /* Base.lproj in Resources */,
 				4BE8AC4329F2E48C00AE08FD /* GameScene.sks in Resources */,
 				4BE8AC4E29F2E48D00AE08FD /* Assets.xcassets in Resources */,
+				65100C0E2A0159FD00993274 /* coin.png in Resources */,
 				4BE8AC5129F2E48D00AE08FD /* LaunchScreen.storyboard in Resources */,
 				4BE8AC4529F2E48C00AE08FD /* Actions.sks in Resources */,
 				4BE8AC7429F2E65500AE08FD /* Mini 1.png in Resources */,

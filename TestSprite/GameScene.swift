@@ -58,8 +58,14 @@ class GameScene: SKScene {
     
     // NEW
     private var popUpContainer: SKSpriteNode?
+    
     private var buttonLabel: SKLabelNode?
     private var buttonFrame: SKShapeNode?
+    private var skipButtonLabel: SKLabelNode?
+    private var skipButtonFrame: SKShapeNode?
+    private var buyButtonLabel: SKLabelNode?
+    private var buyButtonFrame: SKShapeNode?
+    
     private var skView: SKView?
     
     let myObject = MyObject()
@@ -88,6 +94,7 @@ class GameScene: SKScene {
     
     private var lieLabel: SKLabelNode?
     private var checkListLabel: SKLabelNode?
+    private var selectedPrompt: String = "firstPrompt"
     
     override func didMove(to view: SKView) {
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
@@ -194,7 +201,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
-            
+        
         if diceButton?.contains(touchLocation) == true {
             var currentPlayer = playersDataArray[currentPlayerIndex]
             // print(currentPlayer)
@@ -254,7 +261,7 @@ class GameScene: SKScene {
                 if count == 7 {
                     count2 += 1
                     if count2 == 3 {
-                        self?.addPopUpContainer()
+                        self?.addBuyOfferPopUp()
                         timer.invalidate()
                         return
                     }
@@ -264,10 +271,6 @@ class GameScene: SKScene {
         } else if buttonFrame?.contains(touchLocation) == true {
             popUpContainer?.removeFromParent()
             skView?.removeFromSuperview()
-            
-            print(textField?.text ?? "")
-            print(textField2?.text ?? "")
-            print(textField3?.text ?? "")
             
             let firstPrompt = textField?.text
             self.userInfo = ["FirstPrompt": firstPrompt ?? ""]
@@ -287,11 +290,18 @@ class GameScene: SKScene {
             cardArray[self.move].thirdPrompt = self.userInfoBackup?["ThirdPrompt"] as! String
             self.countShown = 2
             
+            cardArray[self.move].correctPrompt = self.selectedPrompt
+            
             print(cardArray[self.move].firstPrompt)
             print(cardArray[self.move].secondPrompt)
             print(cardArray[self.move].thirdPrompt)
+            
+            print(selectedPrompt)
+            print(cardArray[self.move].correctPrompt)
+            
         } else if circleNode?.contains(touchLocation) == true {
             firstCircleClicked.toggle()
+            selectedPrompt = "firstPrompt"
             
             //check list label on circle
             checkListLabel = SKLabelNode(text: "✓")
@@ -300,17 +310,16 @@ class GameScene: SKScene {
             checkListLabel?.fontSize = 50
             checkListLabel?.position = CGPoint(x: 0, y: -17)
             
-            if firstCircleClicked {
-                checkListLabel?.removeFromParent()
-                circleNode?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-                circleNode?.addChild(checkListLabel!)
-                
-                circleNode2?.fillColor = UIColor.white
-                secondCircleClicked = false
-            }
+            checkListLabel?.removeFromParent()
+            circleNode?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+            circleNode?.addChild(checkListLabel!)
+            
+            circleNode2?.fillColor = UIColor.white
+            secondCircleClicked = false
             
         } else if circleNode2?.contains(touchLocation) == true {
             secondCircleClicked.toggle()
+            selectedPrompt = "secondPrompt"
             
             //check list label on circle
             checkListLabel = SKLabelNode(text: "✓")
@@ -319,16 +328,16 @@ class GameScene: SKScene {
             checkListLabel?.fontSize = 50
             checkListLabel?.position = CGPoint(x: 0, y: -17)
             
-            if secondCircleClicked {
-                checkListLabel?.removeFromParent()
-                circleNode2?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-                circleNode2?.addChild(checkListLabel!)
-                
-                circleNode?.fillColor = UIColor.white
-                firstCircleClicked = false
-            }
+            checkListLabel?.removeFromParent()
+            circleNode2?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+            circleNode2?.addChild(checkListLabel!)
+            
+            circleNode?.fillColor = UIColor.white
+            firstCircleClicked = false
+            
         } else if circleNode3?.contains(touchLocation) == true {
             thirdCircleClicked.toggle()
+            selectedPrompt = "firstPrompt"
             
             //check list label on circle
             lieLabel = SKLabelNode(text: "LIE")
@@ -337,19 +346,19 @@ class GameScene: SKScene {
             lieLabel?.fontSize = 30
             lieLabel?.position = CGPoint(x: 0, y: -10)
             
-            if thirdCircleClicked {
-                lieLabel?.removeFromParent()
-                circleNode3?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-                circleNode3?.addChild(lieLabel!)
-                
-                circleNode4?.fillColor = UIColor.white
-                circleNode5?.fillColor = UIColor.white
-                
-                fourthCircleClicked = false
-                fifthCircleClicked = false
-            }
+            lieLabel?.removeFromParent()
+            circleNode3?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+            circleNode3?.addChild(lieLabel!)
+            
+            circleNode4?.fillColor = UIColor.white
+            circleNode5?.fillColor = UIColor.white
+            
+            fourthCircleClicked = false
+            fifthCircleClicked = false
+            
         } else if circleNode4?.contains(touchLocation) == true {
             fourthCircleClicked.toggle()
+            selectedPrompt = "secondPrompt"
             
             //check list label on circle
             lieLabel = SKLabelNode(text: "LIE")
@@ -358,19 +367,19 @@ class GameScene: SKScene {
             lieLabel?.fontSize = 30
             lieLabel?.position = CGPoint(x: 0, y: -10)
             
-            if fourthCircleClicked {
-                lieLabel?.removeFromParent()
-                circleNode4?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-                circleNode4?.addChild(lieLabel!)
-                
-                circleNode3?.fillColor = UIColor.white
-                circleNode5?.fillColor = UIColor.white
-                
-                thirdCircleClicked = false
-                fifthCircleClicked = false
-            }
+            lieLabel?.removeFromParent()
+            circleNode4?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+            circleNode4?.addChild(lieLabel!)
+            
+            circleNode3?.fillColor = UIColor.white
+            circleNode5?.fillColor = UIColor.white
+            
+            thirdCircleClicked = false
+            fifthCircleClicked = false
+            
         } else if circleNode5?.contains(touchLocation) == true {
             fifthCircleClicked.toggle()
+            selectedPrompt = "thirdPrompt"
             
             //check list label on circle
             lieLabel = SKLabelNode(text: "LIE")
@@ -379,17 +388,16 @@ class GameScene: SKScene {
             lieLabel?.fontSize = 30
             lieLabel?.position = CGPoint(x: 0, y: -10)
             
-            if fifthCircleClicked {
-                lieLabel?.removeFromParent()
-                circleNode5?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-                circleNode5?.addChild(lieLabel!)
-                
-                circleNode3?.fillColor = UIColor.white
-                circleNode4?.fillColor = UIColor.white
-                
-                thirdCircleClicked = false
-                fourthCircleClicked = false
-            }
+            lieLabel?.removeFromParent()
+            circleNode5?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+            circleNode5?.addChild(lieLabel!)
+            
+            circleNode3?.fillColor = UIColor.white
+            circleNode4?.fillColor = UIColor.white
+            
+            thirdCircleClicked = false
+            fourthCircleClicked = false
+            
         }
         
     }
@@ -652,19 +660,82 @@ class GameScene: SKScene {
         popUpContainer?.addChild(buttonFrame!)
     }
     
+    func addBuyOfferPopUp() {
+        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 350))
+        popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        popUpContainer?.zPosition = 1
+        
+        //background for popUpContainer
+        let cornerRadius = CGFloat(50)
+        let roundedRect = CGRect(x: -popUpContainer!.size.width / 2, y: -popUpContainer!.size.height / 2, width: popUpContainer!.size.width, height: popUpContainer!.size.height)
+        let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
+        let shape = SKShapeNode(path: path.cgPath)
+        shape.fillColor = UIColor(red: 203/255, green: 218/255, blue: 224/255, alpha: 100)
+        popUpContainer?.addChild(shape)
+        
+        //title
+        let titleLabel = SKLabelNode(text: "YOU LANDED ON")
+        titleLabel.fontName = "AvenirNext-Bold"
+        titleLabel.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        titleLabel.fontSize = 55
+        titleLabel.position = CGPoint(x: 0, y: 80)
+        
+        let challengeNameLabel = SKLabelNode(text: "Would You Rather")
+        challengeNameLabel.fontName = "AvenirNext-Bold"
+        challengeNameLabel.fontColor = UIColor(red: 53/255, green: 157/255, blue: 158/255, alpha: 100)
+        challengeNameLabel.fontSize = 55
+        challengeNameLabel.position = CGPoint(x: 0, y: 10)
+        
+        //skip button
+        skipButtonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
+        skipButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        skipButtonFrame?.position = CGPoint(x: 210, y: -82)
+        
+        skipButtonLabel = SKLabelNode(text: "SKIP")
+        skipButtonLabel?.fontName = "AvenirNext-Bold"
+        skipButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        skipButtonLabel?.fontSize = 50
+        skipButtonLabel?.position = CGPoint(x: 210, y: -100)
+        
+        //buy button
+        buyButtonFrame = SKShapeNode(rectOf: CGSize(width: 365, height: 85), cornerRadius: 40)
+        buyButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        buyButtonFrame?.position = CGPoint(x: -160, y: -82)
+        
+        buyButtonLabel = SKLabelNode(text: "BUY      180")
+        buyButtonLabel?.fontName = "AvenirNext-Bold"
+        buyButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        buyButtonLabel?.fontSize = 50
+        buyButtonLabel?.position = CGPoint(x: -160, y: -100)
+        
+        //coin image for button
+        let coinImage = SKSpriteNode(imageNamed: "coin")
+        coinImage.position = CGPoint(x: -157, y: -80)
+        coinImage.size = CGSize(width: 50, height: 50)
+        
+        addChild(popUpContainer!)
+        popUpContainer?.addChild(titleLabel)
+        popUpContainer?.addChild(challengeNameLabel)
+        popUpContainer?.addChild(buyButtonLabel!)
+        popUpContainer?.addChild(buyButtonFrame!)
+        popUpContainer?.addChild(skipButtonLabel!)
+        popUpContainer?.addChild(skipButtonFrame!)
+        popUpContainer?.addChild(coinImage)
+    }
+    
     override func didEvaluateActions() {
         var objPosition = myObject.objPosition
         if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150)) && countShown == 0 {
             let alertController = UIAlertController(title: "Konfirmasi", message: "Do you want to buy this card?", preferredStyle: .alert)
-
+            
             let yesAction = UIAlertAction(title: "Yes", style: .default) { [weak self] (_) in
                 self?.buy = true
                 self?.addPopUpContainer()
             }
-
+            
             let noAction = UIAlertAction(title: "No", style: .cancel) { [weak self] (_) in
                 self?.buy = false
-//                self?.countShown = 1
+                //                self?.countShown = 1
             }
             alertController.addAction(yesAction)
             alertController.addAction(noAction)
