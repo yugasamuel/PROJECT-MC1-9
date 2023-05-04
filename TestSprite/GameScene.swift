@@ -426,7 +426,7 @@ class GameScene: SKScene {
             
             buy = false
         }
-        
+        //z
     }
     
     func addPopUpContainer() {
