@@ -416,6 +416,15 @@ class GameScene: SKScene {
         } else if truthButtonFrame?.contains(touchLocation) == true {
             popUpContainer?.removeFromParent()
             addPopUpContainer3(title: "TRUTH")
+        } else if buyButtonFrame?.contains(touchLocation) == true {
+            popUpContainer?.removeFromParent()
+            buy = true
+            addPopUpContainer2()
+        } else if skipButtonFrame?.contains(touchLocation) == true {
+            diceButton?.position = CGPoint(x: -180, y: 0)
+            popUpContainer?.removeFromParent()
+            
+            buy = false
         }
         
     }
@@ -863,78 +872,46 @@ class GameScene: SKScene {
         if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150) || (objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
 
             challengeName = "2 Truth 1 Lie"
-            let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
-            
-            let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
-                self?.buy = true
-                self?.addPopUpContainer()  //2t1l
-            }
-            
-            let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
-                self?.buy = false
-                //                self?.countShown = 1
-            }
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-            
-            view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-            
+            addBuyOfferPopUp()
             countShown = 1
             
         } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240) || (objPosition.x == -470 && objPosition.y == 40)) && countShown == 0 {
+            
             challengeName = "Would You Rather"
-            let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
-            
-            let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
-                self?.buy = true
-                self?.addPopUpContainer2()  //wyr
-            }
-            
-            let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
-                self?.buy = false
-                //                self?.countShown = 1
-            }
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-            
-            view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-            
+            addBuyOfferPopUp()
             countShown = 1
+            
         } else if ((objPosition.x == 420 && objPosition.y == 80) || (objPosition.x == 60 && objPosition.y == -130) || (objPosition.x == -270 && objPosition.y == -240) || (objPosition.x == -355 && objPosition.y == -205) || (objPosition.x == -80 && objPosition.y == 240)) && countShown == 0 {
+            
             challengeName = "Truth or Dare"
-            let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
-            
-            let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
-                self?.buy = true
-                self?.addTODPopUp()  //tod
-            }
-            
-            let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
-                self?.buy = false
-                //  self?.countShown = 1
-                //  new
-            }
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-            
-            view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-            
+            addBuyOfferPopUp()
             countShown = 1
+            
         } else if ((objPosition.x == 380 && objPosition.y == -180) || (objPosition.x == 320 && objPosition.y == 110) || (objPosition.x == -90 && objPosition.y == -250) || (objPosition.x == -425 && objPosition.y == -135) || (objPosition.x == -360 && objPosition.y == 200) || (objPosition.x == 10 && objPosition.y == 180)) && countShown == 0 {
+            
             self.addChallengePopUp()   //challenge
             countShown = 1
+            
         } else if ((objPosition.x == 190 && objPosition.y == -110)) && countShown == 0 {
+            
             print("Nyampe Safe House")  //safe house
             countShown = 1
+            
         } else if ((objPosition.x == -460 && objPosition.y == -50)) && countShown == 0 {
+            
             print("Nyampe Force Move")  //Force Move
             countShown = 1
+            
         } else if ((objPosition.x == 70 && objPosition.y == 90)) && countShown == 0 {
+            
             print("Nyampe Let Go")  //Let Go
             countShown = 1
+            
         } else if ((objPosition.x == 130 && objPosition.y == -10)) && countShown == 0 {
+            
             print("Nyampe Start")  //Start
             countShown = 1
+            
         }
     }
     
