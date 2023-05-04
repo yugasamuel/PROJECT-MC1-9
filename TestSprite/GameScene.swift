@@ -111,52 +111,6 @@ class GameScene: SKScene {
     var currentCoin1 = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
     
     override func didMove(to view: SKView) {
-//        -----------------------------------------------------------------
-//        var playerInfoView1 = UIView(frame: CGRect(x: 15, y: 13, width: 348, height: 153))
-//                let playerInfoView1Background = UIImageView(frame: CGRect(x: 15, y: 14, width: 348, height: 153))
-//                playerInfoView1Background.image = UIImage(named: "background_player_info")
-//                let avatarImageView1 = UIImageView(frame: CGRect(x: 44, y: 41, width: 82, height: 97))
-//                avatarImageView1.image = UIImage(named: "playerfix1")
-//                let scoreLabel1 = UILabel(frame: CGRect(x: 202, y: 99, width: 52, height: 22))
-//                let playerlabel1 = UILabel(frame: CGRect(x: 149, y: 50, width: 144, height: 25))
-//                let coinImageView1 = UIImageView(frame: CGRect(x: 144, y: 86, width: 51, height: 46))
-//                coinImageView1.image = UIImage(named: "coin")
-//                playerlabel1.text = "PLAYER 1"
-////                scoreLabel1.font = UIFont.systemFont(ofSize: 24)
-////                scoreLabel1.textColor = UIColor(hex: 0x215172)
-//                scoreLabel1.text = "\(playersDataArray[0].currentPoin)"
-//                playerInfoView1.addSubview(scoreLabel1)
-//                playerInfoView1.addSubview(coinImageView1)
-//                playerInfoView1.addSubview(playerlabel1)
-//                playerInfoView1.addSubview(playerInfoView1Background)
-//                playerInfoView1.addSubview(avatarImageView1)
-//                view.addSubview(playerInfoView1)
-        
-//        var playerInfoBgTexture = SKTexture(imageNamed: "background_player_info")
-//        playerInfoFrame1 = SKShapeNode(fileNamed: "background_player_info")
-//        playerInfoFrame1.size = CGSize(width: 348, height: 153)
-//        diceButton?.position = CGPoint(x: -500, y: 300)
-//        addChild(diceButton!)
-        
-        let playerInfoBgTexture1 = SKSpriteNode(imageNamed: "background_player_info")
-        playerInfoBgTexture1.position = CGPoint(x: -500, y: 400)
-        playerInfoBgTexture1.size = CGSize(width: 348, height: 150)
-        addChild(playerInfoBgTexture1)
-        
-        let playerInfoAva1 = SKSpriteNode(imageNamed: "playerfix1")
-        playerInfoAva1.position = CGPoint(x: -490, y: 390)
-        playerInfoAva1.size = CGSize(width: 82, height: 97)
-        addChild(playerInfoAva1)
-        
-        let coin1 = SKSpriteNode(imageNamed: "coin")
-        coin1.position = CGPoint(x: -450, y: 350)
-        coin1.size = CGSize(width: 51, height: 46)
-        addChild(coin1)
-        
-       
-
-        
-        
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
         let background = SKSpriteNode(imageNamed: "mini2")
         background.position = CGPoint(x: 0, y: 0)
@@ -222,14 +176,6 @@ class GameScene: SKScene {
         diceButton?.position = CGPoint(x: -180, y: 0)
         addChild(diceButton!)
         
-        
-//        currentCoin1 = SKLabelNode(text: "\(playersDataArray[0].currentPoin)")
-//        currentCoin1 = SKLabelNode()
-        addChild(currentCoin1)
-        currentCoin1.position = CGPoint(x: -400, y: 350)
-        currentCoin1.text = "\(playersDataArray[0].currentPoin)"
-        
-        
         // ------------------------------------POP UP CONTAINER----------------------------------------------
         // ada method sendiri di bawah
         
@@ -279,13 +225,8 @@ class GameScene: SKScene {
             let diceNumber = rollDice()
             let diceButtonTexture = SKTexture(imageNamed: "dice\(diceNumber)")
             diceButton?.texture = diceButtonTexture
-            
-            currentCoin1 = SKLabelNode(text: "\(playersDataArray[0].currentPoin)")
-            
             var count = 0
-            
-            
-
+            var count2 = 0
             
             let diceRollTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [weak self] timer in
                 count += 1
@@ -303,20 +244,25 @@ class GameScene: SKScene {
                         
                         if move >= 25 {
                             move = move - 25
-                            playersDataArray[self!.currentPlayerIndex].currentPoin = playersDataArray[self!.currentPlayerIndex].currentPoin + 150
+                            currentPlayer.currentPoin = currentPlayer.currentPoin + 150
                         }
-                        self!.movePiece(playersDataArray[self!.currentPlayerIndex].pieceNode, toTile: move)
-//                        playersDataArray[self!.currentPlayerIndex].currentPoin = self!.gameRules(move: move, coin: playersDataArray[self!.currentPlayerIndex].currentPoin, player: playersDataArray[self!.currentPlayerIndex].playersName)
+                        self!.movePiece(currentPlayer.pieceNode, toTile: move)
+                        //                         if cardArray[move].cardChallengesType == "SafeHouse" {
+                        //                             self!.skipCount -= 1
+                        //                             if self!.skipCount != 0 {
+                        //                                 self!.movePiece(currentPlayer.pieceNode, toTile: move)
+                        //                             }
+                        //                             else {
+                        //                                 print("berhasil kelewat")
+                        //                             }
+                        //
+                        //                         }
+                        //                         else {
+                        //                             self!.movePiece(currentPlayer.pieceNode, toTile: move)
+                        //                         }
                         
-                        
-                        let updateTextAction = SKAction.run {
-                            let currentCoin1 = SKLabelNode.init(text: "New Text")
-                        }
-                        self?.currentCoin1.run(updateTextAction)
-                        
-
-                        
-                        print("namanya: \(playersDataArray[self!.currentPlayerIndex].playersName), dan poinnya: \(playersDataArray[self!.currentPlayerIndex].currentPoin)")
+                        currentPlayer.currentPoin = self!.gameRules(move: move, coin: currentPlayer.currentPoin, player: currentPlayer.playersName)
+                        print("namanya: \(currentPlayer.playersName), dan poinnya: \(currentPlayer.currentPoin)")
                         
                         self!.currentPlayerIndex += 1
                         if self!.currentPlayerIndex >= playersDataArray.count {
@@ -355,7 +301,6 @@ class GameScene: SKScene {
             self.userInfoBackup = self.userInfo
             cardArray[self.move].secondPrompt = self.userInfoBackup?["SecondPrompt"] as! String
             self.countShown = 2
-            
             
             let thirdPrompt = textField3?.text
             self.userInfo = ["ThirdPrompt": thirdPrompt ?? ""]
@@ -487,10 +432,7 @@ class GameScene: SKScene {
             
             buy = false
         }
-        currentCoin1.text = "uhuy"
-        
-        print("harusnya \(playersDataArray[0].currentPoin)")
-        
+        //z
     }
     
     func addPopUpContainer() {
