@@ -104,7 +104,59 @@ class GameScene: SKScene {
     
     private var challengeName: String = "Truth or Dare"
     
+    
+    private var playerInfoFrame1: SKShapeNode?
+//    private var currentCoin1: SKLabelNode?
+//    var currentCoin1 = SKLabelNode()
+    var currentCoin1 = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+    
     override func didMove(to view: SKView) {
+//        -----------------------------------------------------------------
+//        var playerInfoView1 = UIView(frame: CGRect(x: 15, y: 13, width: 348, height: 153))
+//                let playerInfoView1Background = UIImageView(frame: CGRect(x: 15, y: 14, width: 348, height: 153))
+//                playerInfoView1Background.image = UIImage(named: "background_player_info")
+//                let avatarImageView1 = UIImageView(frame: CGRect(x: 44, y: 41, width: 82, height: 97))
+//                avatarImageView1.image = UIImage(named: "playerfix1")
+//                let scoreLabel1 = UILabel(frame: CGRect(x: 202, y: 99, width: 52, height: 22))
+//                let playerlabel1 = UILabel(frame: CGRect(x: 149, y: 50, width: 144, height: 25))
+//                let coinImageView1 = UIImageView(frame: CGRect(x: 144, y: 86, width: 51, height: 46))
+//                coinImageView1.image = UIImage(named: "coin")
+//                playerlabel1.text = "PLAYER 1"
+////                scoreLabel1.font = UIFont.systemFont(ofSize: 24)
+////                scoreLabel1.textColor = UIColor(hex: 0x215172)
+//                scoreLabel1.text = "\(playersDataArray[0].currentPoin)"
+//                playerInfoView1.addSubview(scoreLabel1)
+//                playerInfoView1.addSubview(coinImageView1)
+//                playerInfoView1.addSubview(playerlabel1)
+//                playerInfoView1.addSubview(playerInfoView1Background)
+//                playerInfoView1.addSubview(avatarImageView1)
+//                view.addSubview(playerInfoView1)
+        
+//        var playerInfoBgTexture = SKTexture(imageNamed: "background_player_info")
+//        playerInfoFrame1 = SKShapeNode(fileNamed: "background_player_info")
+//        playerInfoFrame1.size = CGSize(width: 348, height: 153)
+//        diceButton?.position = CGPoint(x: -500, y: 300)
+//        addChild(diceButton!)
+        
+        let playerInfoBgTexture1 = SKSpriteNode(imageNamed: "background_player_info")
+        playerInfoBgTexture1.position = CGPoint(x: -500, y: 400)
+        playerInfoBgTexture1.size = CGSize(width: 348, height: 150)
+        addChild(playerInfoBgTexture1)
+        
+        let playerInfoAva1 = SKSpriteNode(imageNamed: "playerfix1")
+        playerInfoAva1.position = CGPoint(x: -490, y: 390)
+        playerInfoAva1.size = CGSize(width: 82, height: 97)
+        addChild(playerInfoAva1)
+        
+        let coin1 = SKSpriteNode(imageNamed: "coin")
+        coin1.position = CGPoint(x: -450, y: 350)
+        coin1.size = CGSize(width: 51, height: 46)
+        addChild(coin1)
+        
+       
+
+        
+        
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
         let background = SKSpriteNode(imageNamed: "mini2")
         background.position = CGPoint(x: 0, y: 0)
@@ -170,6 +222,14 @@ class GameScene: SKScene {
         diceButton?.position = CGPoint(x: -180, y: 0)
         addChild(diceButton!)
         
+        
+//        currentCoin1 = SKLabelNode(text: "\(playersDataArray[0].currentPoin)")
+//        currentCoin1 = SKLabelNode()
+        addChild(currentCoin1)
+        currentCoin1.position = CGPoint(x: -400, y: 350)
+        currentCoin1.text = "\(playersDataArray[0].currentPoin)"
+        
+        
         // ------------------------------------POP UP CONTAINER----------------------------------------------
         // ada method sendiri di bawah
         
@@ -217,8 +277,13 @@ class GameScene: SKScene {
             let diceNumber = rollDice()
             let diceButtonTexture = SKTexture(imageNamed: "dice\(diceNumber)")
             diceButton?.texture = diceButtonTexture
+            
+            currentCoin1 = SKLabelNode(text: "\(playersDataArray[0].currentPoin)")
+            
             var count = 0
-            var count2 = 0
+            
+            
+
             
             let diceRollTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [weak self] timer in
                 count += 1
@@ -236,25 +301,20 @@ class GameScene: SKScene {
                         
                         if move >= 25 {
                             move = move - 25
-                            currentPlayer.currentPoin = currentPlayer.currentPoin + 150
+                            playersDataArray[self!.currentPlayerIndex].currentPoin = playersDataArray[self!.currentPlayerIndex].currentPoin + 150
                         }
-                        self!.movePiece(currentPlayer.pieceNode, toTile: move)
-                        //                         if cardArray[move].cardChallengesType == "SafeHouse" {
-                        //                             self!.skipCount -= 1
-                        //                             if self!.skipCount != 0 {
-                        //                                 self!.movePiece(currentPlayer.pieceNode, toTile: move)
-                        //                             }
-                        //                             else {
-                        //                                 print("berhasil kelewat")
-                        //                             }
-                        //
-                        //                         }
-                        //                         else {
-                        //                             self!.movePiece(currentPlayer.pieceNode, toTile: move)
-                        //                         }
+                        self!.movePiece(playersDataArray[self!.currentPlayerIndex].pieceNode, toTile: move)
+//                        playersDataArray[self!.currentPlayerIndex].currentPoin = self!.gameRules(move: move, coin: playersDataArray[self!.currentPlayerIndex].currentPoin, player: playersDataArray[self!.currentPlayerIndex].playersName)
                         
-                        currentPlayer.currentPoin = self!.gameRules(move: move, coin: currentPlayer.currentPoin, player: currentPlayer.playersName)
-                        print("namanya: \(currentPlayer.playersName), dan poinnya: \(currentPlayer.currentPoin)")
+                        
+                        let updateTextAction = SKAction.run {
+                            let currentCoin1 = SKLabelNode.init(text: "New Text")
+                        }
+                        self?.currentCoin1.run(updateTextAction)
+                        
+
+                        
+                        print("namanya: \(playersDataArray[self!.currentPlayerIndex].playersName), dan poinnya: \(playersDataArray[self!.currentPlayerIndex].currentPoin)")
                         
                         self!.currentPlayerIndex += 1
                         if self!.currentPlayerIndex >= playersDataArray.count {
@@ -264,17 +324,6 @@ class GameScene: SKScene {
                     }
                 })
             }
-            
-//            let popUpTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] timer in
-//                if count == 7 {
-//                    count2 += 1
-//                    if count2 == 3 {
-//                        self?.addChallengePopUp()
-//                        timer.invalidate()
-//                        return
-//                    }
-//                }
-//            }
             
         } else if buttonFrame?.contains(touchLocation) == true {
             popUpContainer?.removeFromParent()
@@ -291,6 +340,7 @@ class GameScene: SKScene {
             self.userInfoBackup = self.userInfo
             cardArray[self.move].secondPrompt = self.userInfoBackup?["SecondPrompt"] as! String
             self.countShown = 2
+            
             
             let thirdPrompt = textField3?.text
             self.userInfo = ["ThirdPrompt": thirdPrompt ?? ""]
@@ -413,6 +463,9 @@ class GameScene: SKScene {
             popUpContainer?.removeFromParent()
             addPopUpContainer3(title: "TRUTH")
         }
+        currentCoin1.text = "uhuy"
+        
+        print("harusnya \(playersDataArray[0].currentPoin)")
         
     }
     
@@ -844,11 +897,41 @@ class GameScene: SKScene {
         var objPosition = myObject.objPosition
         if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150) || (objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
             challengeName = "2 Truth 1 Lie"
+            print("before pengurangan = \(playersDataArray[self.currentPlayerIndex].currentPoin)")
+            
+            
+//            if cardArray[move].cardOwner == "Null" {
+//                let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+//                
+//                let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+//                    self?.buy = true
+//                    self?.addPopUpContainer()  //2t1l
+//                    cardArray[self!.move].cardOwner = playersDataArray[self!.currentPlayerIndex].playersName
+//                    
+//                    playersDataArray[self!.currentPlayerIndex].currentPoin -= 150
+//                    print("after pengurangan = \(playersDataArray[self!.currentPlayerIndex].currentPoin)")
+//                }
+//                
+//                let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+//                    self?.buy = false
+//                    //                self?.countShown = 1
+//                }
+//                alertController.addAction(yesAction)
+//                alertController.addAction(noAction)
+//                
+//                view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+//                
+//                countShown = 1
+//            }
             let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
             
             let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
                 self?.buy = true
                 self?.addPopUpContainer()  //2t1l
+                cardArray[self!.move].cardOwner = playersDataArray[self!.currentPlayerIndex].playersName
+                
+                playersDataArray[self!.currentPlayerIndex].currentPoin -= 150
+                print("after pengurangan = \(playersDataArray[self!.currentPlayerIndex].currentPoin)")
             }
             
             let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
@@ -861,6 +944,29 @@ class GameScene: SKScene {
             view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
             
             countShown = 1
+            
+//            else { // kalau udah ada yang punya
+//                let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+//
+//                let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+//                    self?.buy = true
+//                    self?.addPopUpContainer()  //2t1l
+//                    cardArray[self!.move].cardOwner = playersDataArray[self!.currentPlayerIndex].playersName
+//                    playersDataArray[self!.currentPlayerIndex].currentPoin -= 150
+//                }
+//
+//                let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+//                    self?.buy = false
+//                    //                self?.countShown = 1
+//                }
+//                alertController.addAction(yesAction)
+//                alertController.addAction(noAction)
+//
+//                view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+//
+//                countShown = 1
+//            }
+            
         } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240) || (objPosition.x == -470 && objPosition.y == 40)) && countShown == 0 {
             challengeName = "Would You Rather"
             let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
@@ -943,12 +1049,6 @@ class GameScene: SKScene {
     func gameRules(move: Int, coin: Int, player: String) -> Int {
         
         var coinz = coin
-        //        if cardArray[move].cardChallengesType == "SafeHouse" {
-        //            print("which card that you want to let go?")
-        //            let userInput = readLine()
-        //            print("card \(userInput ?? "nil") is no longer be yours")
-        //        }
-        
         if cardArray[move].cardOwner == "Null" {
             if cardArray[move].cardChallengesType == "2 Truth 1 Lie" {
                 if coinz >= 150 {
