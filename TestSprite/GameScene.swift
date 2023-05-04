@@ -211,6 +211,8 @@ class GameScene: SKScene {
         let touchLocation = touch.location(in: self)
         
         if diceButton?.contains(touchLocation) == true {
+            print("dice clicked")
+
             var currentPlayer = playersDataArray[currentPlayerIndex]
             // print(currentPlayer)
             
@@ -264,7 +266,7 @@ class GameScene: SKScene {
                     }
                 })
             }
-            
+
 //            let popUpTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] timer in
 //                if count == 7 {
 //                    count2 += 1
@@ -277,6 +279,8 @@ class GameScene: SKScene {
 //            }
             
         } else if buttonFrame?.contains(touchLocation) == true {
+            diceButton?.position = CGPoint(x: -180, y: 0)
+            
             popUpContainer?.removeFromParent()
             skView?.removeFromSuperview()
             
@@ -417,6 +421,8 @@ class GameScene: SKScene {
     }
     
     func addPopUpContainer() {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 600))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -523,6 +529,8 @@ class GameScene: SKScene {
     }
     
     func addPopUpContainer2() {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 480))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -611,6 +619,8 @@ class GameScene: SKScene {
     }
     
     func addPopUpContainer3(title: String) {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 380))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -675,6 +685,8 @@ class GameScene: SKScene {
     }
     
     func addBuyOfferPopUp() {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 350))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -738,6 +750,8 @@ class GameScene: SKScene {
     }
     
     func addChallengePopUp() {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1150, height: 350))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -791,6 +805,8 @@ class GameScene: SKScene {
     }
     
     func addTODPopUp() {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 800, height: 200))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         popUpContainer?.zPosition = 1
@@ -842,7 +858,10 @@ class GameScene: SKScene {
     
     override func didEvaluateActions() {
         var objPosition = myObject.objPosition
+        playersDataArray[move].currentSteps
+        
         if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150) || (objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
+
             challengeName = "2 Truth 1 Lie"
             let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
             
@@ -861,6 +880,7 @@ class GameScene: SKScene {
             view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
             
             countShown = 1
+            
         } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240) || (objPosition.x == -470 && objPosition.y == 40)) && countShown == 0 {
             challengeName = "Would You Rather"
             let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
