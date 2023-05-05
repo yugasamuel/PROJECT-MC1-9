@@ -11,7 +11,6 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,10 +27,10 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
 
             // Create a new UIView for the player info
-            var playerInfoView1 = UIView(frame: CGRect(x: 15, y: 13, width: 348, height: 150))
-            var playerInfoView2 = UIView(frame: CGRect(x: 831, y: 13, width: 348, height: 150))
-            var playerInfoView3 = UIView(frame: CGRect(x: 831, y: 666, width: 348, height: 150))
-            var playerInfoView4 = UIView(frame: CGRect(x: 15, y: 666, width: 348, height: 150))
+            let playerInfoView1 = UIView(frame: CGRect(x: 15, y: 13, width: 348, height: 150))
+            let playerInfoView2 = UIView(frame: CGRect(x: 831, y: 13, width: 348, height: 150))
+            let playerInfoView3 = UIView(frame: CGRect(x: 831, y: 666, width: 348, height: 150))
+            let playerInfoView4 = UIView(frame: CGRect(x: 15, y: 666, width: 348, height: 150))
             
             let playerInfoView1Background = UIImageView(frame: CGRect(x: 15, y: 14, width: 348, height: 150))
             playerInfoView1Background.image = UIImage(named: "background_player_info")
@@ -128,9 +127,6 @@ class GameViewController: UIViewController {
             scoreLabel3.text = "\(playersDataArray[2].currentPoin)"
             scoreLabel4.text = "\(playersDataArray[3].currentPoin)"
 
-            
-            
-            
             // Add the score label to the player info view
             playerInfoView1.addSubview(scoreLabel1)
             playerInfoView1.addSubview(coinImageView1)

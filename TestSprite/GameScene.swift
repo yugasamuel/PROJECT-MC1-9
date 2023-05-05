@@ -104,6 +104,14 @@ class GameScene: SKScene {
     
     private var challengeName: String = "Truth or Dare"
     
+    private var diceClicked: Bool = false
+    private var buyPopUpAppeared: Bool = false
+    private var todPopUpAppeared: Bool = false
+    private var challengePopUpAppeared: Bool = false
+    private var popUpContainerAppeared: Bool = false
+    private var popUpContainer2Appeared: Bool = false
+    private var popUpContainer3Appeared: Bool = false
+    
     override func didMove(to view: SKView) {
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
         let background = SKSpriteNode(imageNamed: "mini2")
@@ -152,8 +160,6 @@ class GameScene: SKScene {
         boardNodes[23].position = CGPoint(x: 10 , y: 180) //RandomChallenge
         boardNodes[24].position = CGPoint(x: 70 , y: 90) //LetGo
         
-        let startingBoardNode = boardNodes[0] // assuming you have an array of board nodes
-        
         //--------------------------------------PLAYERS INITIATION------------------------------------------
         for player in 0..<playersDataArray.count {
             let startingBoardNode = boardNodes[playersDataArray[player].currentSteps]
@@ -164,7 +170,7 @@ class GameScene: SKScene {
         }
         
         // ------------------------------------DICE INITIATION----------------------------------------------
-        var diceButtonTexture = SKTexture(imageNamed: "dice\(diceNumber)")
+        let diceButtonTexture = SKTexture(imageNamed: "dice\(diceNumber)")
         diceButton = SKSpriteNode(texture: diceButtonTexture)
         diceButton?.size = CGSize(width: 200, height: 200)
         diceButton?.position = CGPoint(x: -180, y: 0)
@@ -210,11 +216,8 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         
-        if diceButton?.contains(touchLocation) == true {
-            print("dice clicked")
-
-            var currentPlayer = playersDataArray[currentPlayerIndex]
-            // print(currentPlayer)
+        if diceButton?.contains(touchLocation) == true && diceClicked == false {
+            diceClicked = true
             
             let diceNumber = rollDice()
             let diceButtonTexture = SKTexture(imageNamed: "dice\(diceNumber)")
@@ -238,25 +241,12 @@ class GameScene: SKScene {
                         
                         if move >= 25 {
                             move = move - 25
-                            currentPlayer.currentPoin = currentPlayer.currentPoin + 150
+                            playersDataArray[self!.currentPlayerIndex].currentPoin += 150
                         }
-                        self!.movePiece(currentPlayer.pieceNode, toTile: move)
-                        //                         if cardArray[move].cardChallengesType == "SafeHouse" {
-                        //                             self!.skipCount -= 1
-                        //                             if self!.skipCount != 0 {
-                        //                                 self!.movePiece(currentPlayer.pieceNode, toTile: move)
-                        //                             }
-                        //                             else {
-                        //                                 print("berhasil kelewat")
-                        //                             }
-                        //
-                        //                         }
-                        //                         else {
-                        //                             self!.movePiece(currentPlayer.pieceNode, toTile: move)
-                        //                         }
+                        self!.movePiece(playersDataArray[self!.currentPlayerIndex].pieceNode, toTile: move)
                         
-                        currentPlayer.currentPoin = self!.gameRules(move: move, coin: currentPlayer.currentPoin, player: currentPlayer.playersName)
-                        print("namanya: \(currentPlayer.playersName), dan poinnya: \(currentPlayer.currentPoin)")
+                        playersDataArray[self!.currentPlayerIndex].currentPoin = self!.gameRules(move: move, coin: playersDataArray[self!.currentPlayerIndex].currentPoin, player: playersDataArray[self!.currentPlayerIndex].playersName)
+                        print("namanya: \(playersDataArray[self!.currentPlayerIndex].playersName), dan poinnya: \(playersDataArray[self!.currentPlayerIndex].currentPoin)")
                         
                         self!.currentPlayerIndex += 1
                         if self!.currentPlayerIndex >= playersDataArray.count {
@@ -278,11 +268,13 @@ class GameScene: SKScene {
 //                }
 //            }
             
-        } else if buttonFrame?.contains(touchLocation) == true {
-            diceButton?.position = CGPoint(x: -180, y: 0)
+        } else if buttonFrame?.contains(touchLocation) == true && (popUpContainerAppeared == true || popUpContainer2Appeared == true || popUpContainer3Appeared == true) {
+            diceClicked = false
+            popUpContainerAppeared = false
+            popUpContainer2Appeared = false
+            popUpContainer3Appeared = false
             
-            popUpContainer?.removeFromParent()
-            skView?.removeFromSuperview()
+            removePopUpContainer()
             
             let firstPrompt = textField?.text
             self.userInfo = ["FirstPrompt": firstPrompt ?? ""]
@@ -304,12 +296,12 @@ class GameScene: SKScene {
             
             cardArray[self.move].correctPrompt = self.selectedPrompt
             
-            print(cardArray[self.move].firstPrompt)
-            print(cardArray[self.move].secondPrompt)
-            print(cardArray[self.move].thirdPrompt)
-            
-            print(selectedPrompt)
-            print(cardArray[self.move].correctPrompt)
+//            print(cardArray[self.move].firstPrompt)
+//            print(cardArray[self.move].secondPrompt)
+//            print(cardArray[self.move].thirdPrompt)
+//
+//            print(selectedPrompt)
+//            print(cardArray[self.move].correctPrompt)
             
         } else if circleNode?.contains(touchLocation) == true {
             firstCircleClicked.toggle()
@@ -410,27 +402,42 @@ class GameScene: SKScene {
             thirdCircleClicked = false
             fourthCircleClicked = false
             
-        } else if dareButtonFrame?.contains(touchLocation) == true {
-            popUpContainer?.removeFromParent()
+        } else if dareButtonFrame?.contains(touchLocation) == true && todPopUpAppeared == true {
+            removePopUpContainer()
+            todPopUpAppeared = false
             addPopUpContainer3(title: "DARE")
-        } else if truthButtonFrame?.contains(touchLocation) == true {
-            popUpContainer?.removeFromParent()
+            
+        } else if truthButtonFrame?.contains(touchLocation) == true && todPopUpAppeared == true {
+            removePopUpContainer()
+            todPopUpAppeared = false
             addPopUpContainer3(title: "TRUTH")
-        } else if buyButtonFrame?.contains(touchLocation) == true {
-            popUpContainer?.removeFromParent()
+            
+        } else if buyButtonFrame?.contains(touchLocation) == true && buyPopUpAppeared == true {
+            removePopUpContainer()
+            buyPopUpAppeared = false
             buy = true
-            addPopUpContainer2()
-        } else if skipButtonFrame?.contains(touchLocation) == true {
-            diceButton?.position = CGPoint(x: -180, y: 0)
-            popUpContainer?.removeFromParent()
+            
+            if challengeName == "2 Truth 1 Lie" {
+                addPopUpContainer()
+            } else if challengeName == "Would You Rather" {
+                addPopUpContainer2()
+            } else if challengeName == "Truth or Dare" {
+                addTODPopUp()
+            }
+            
+        } else if skipButtonFrame?.contains(touchLocation) == true && (challengePopUpAppeared == true || buyPopUpAppeared == true) {
+            diceClicked = false
+            challengePopUpAppeared = false
+            buyPopUpAppeared = false
+            removePopUpContainer()
             
             buy = false
         }
-        //z
+
     }
     
     func addPopUpContainer() {
-        diceButton?.position = CGPoint(x: 1000, y: 0)
+        popUpContainerAppeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 600))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -538,7 +545,7 @@ class GameScene: SKScene {
     }
     
     func addPopUpContainer2() {
-        diceButton?.position = CGPoint(x: 1000, y: 0)
+        popUpContainer2Appeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 480))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -628,7 +635,7 @@ class GameScene: SKScene {
     }
     
     func addPopUpContainer3(title: String) {
-        diceButton?.position = CGPoint(x: 1000, y: 0)
+        popUpContainer3Appeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 380))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -694,7 +701,7 @@ class GameScene: SKScene {
     }
     
     func addBuyOfferPopUp() {
-        diceButton?.position = CGPoint(x: 1000, y: 0)
+        buyPopUpAppeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 350))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -759,7 +766,7 @@ class GameScene: SKScene {
     }
     
     func addChallengePopUp() {
-        diceButton?.position = CGPoint(x: 1000, y: 0)
+        challengePopUpAppeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1150, height: 350))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -795,26 +802,26 @@ class GameScene: SKScene {
         challengeNameLabel.position = CGPoint(x: 0, y: -15)
         
         //next button
-        buttonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
-        buttonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
-        buttonFrame?.position = CGPoint(x: 0, y: -105)
+        skipButtonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
+        skipButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        skipButtonFrame?.position = CGPoint(x: 0, y: -105)
         
-        buttonLabel = SKLabelNode(text: "DONE")
-        buttonLabel?.fontName = "AvenirNext-Bold"
-        buttonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
-        buttonLabel?.fontSize = 50
-        buttonLabel?.position = CGPoint(x: 0, y: -125)
+        skipButtonLabel = SKLabelNode(text: "DONE")
+        skipButtonLabel?.fontName = "AvenirNext-Bold"
+        skipButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        skipButtonLabel?.fontSize = 50
+        skipButtonLabel?.position = CGPoint(x: 0, y: -125)
         
         addChild(popUpContainer!)
         popUpContainer?.addChild(titleLabel)
         popUpContainer?.addChild(subTitleLabel)
         popUpContainer?.addChild(challengeNameLabel)
-        popUpContainer?.addChild(buttonLabel!)
-        popUpContainer?.addChild(buttonFrame!)
+        popUpContainer?.addChild(skipButtonLabel!)
+        popUpContainer?.addChild(skipButtonFrame!)
     }
     
     func addTODPopUp() {
-        diceButton?.position = CGPoint(x: 1000, y: 0)
+        todPopUpAppeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 800, height: 200))
         popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -839,7 +846,7 @@ class GameScene: SKScene {
         dareButtonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
         dareButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
         dareButtonFrame?.position = CGPoint(x: 190, y: 0)
-            
+        
         dareButtonLabel = SKLabelNode(text: "DARE")
         dareButtonLabel?.fontName = "AvenirNext-Bold"
         dareButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
@@ -865,17 +872,23 @@ class GameScene: SKScene {
         popUpContainer?.addChild(truthButtonLabel!)
     }
     
+    func removePopUpContainer() {
+        skView?.removeFromSuperview()
+        popUpContainer?.removeAllChildren()
+        popUpContainer?.removeFromParent()
+        popUpContainer = nil
+    }
+    
     override func didEvaluateActions() {
-        var objPosition = myObject.objPosition
-        playersDataArray[move].currentSteps
+        let objPosition = myObject.objPosition
         
-        if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150) || (objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
+        if ((objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -470 && objPosition.y == 40) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
 
             challengeName = "2 Truth 1 Lie"
             addBuyOfferPopUp()
             countShown = 1
             
-        } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240) || (objPosition.x == -470 && objPosition.y == 40)) && countShown == 0 {
+        } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240)) && countShown == 0 {
             
             challengeName = "Would You Rather"
             addBuyOfferPopUp()
@@ -889,26 +902,35 @@ class GameScene: SKScene {
             
         } else if ((objPosition.x == 380 && objPosition.y == -180) || (objPosition.x == 320 && objPosition.y == 110) || (objPosition.x == -90 && objPosition.y == -250) || (objPosition.x == -425 && objPosition.y == -135) || (objPosition.x == -360 && objPosition.y == 200) || (objPosition.x == 10 && objPosition.y == 180)) && countShown == 0 {
             
-            self.addChallengePopUp()   //challenge
+            challengeName = "Challenge"
+            addChallengePopUp()   //challenge
             countShown = 1
             
         } else if ((objPosition.x == 190 && objPosition.y == -110)) && countShown == 0 {
             
+            challengeName = "Safe House"
+            diceClicked = false
             print("Nyampe Safe House")  //safe house
             countShown = 1
             
         } else if ((objPosition.x == -460 && objPosition.y == -50)) && countShown == 0 {
             
+            challengeName = "Force Move"
+            diceClicked = false
             print("Nyampe Force Move")  //Force Move
             countShown = 1
             
         } else if ((objPosition.x == 70 && objPosition.y == 90)) && countShown == 0 {
             
+            challengeName = "Let Go"
+            diceClicked = false
             print("Nyampe Let Go")  //Let Go
             countShown = 1
             
         } else if ((objPosition.x == 130 && objPosition.y == -10)) && countShown == 0 {
             
+            challengeName = "Start"
+            diceClicked = false
             print("Nyampe Start")  //Start
             countShown = 1
             
