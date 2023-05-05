@@ -104,6 +104,15 @@ class GameScene: SKScene {
     
     private var challengeName: String = "Truth or Dare"
     
+    private var textLabel: UILabel?
+    private var textLabel2: UILabel?
+    private var textLabel3: UILabel?
+    
+    var playerCoin1 = SKLabelNode()
+    var playerCoin2 = SKLabelNode()
+    var playerCoin3 = SKLabelNode()
+    var playerCoin4 = SKLabelNode()
+    
     
     private var playerInfoFrame1: SKShapeNode?
 //    private var currentCoin1: SKLabelNode?
@@ -111,12 +120,129 @@ class GameScene: SKScene {
     var currentCoin1 = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
     
     override func didMove(to view: SKView) {
+//        current state player 1
+
+        let playerInfoBgTexture1 = SKSpriteNode(imageNamed: "background_player_info")
+        playerInfoBgTexture1.position = CGPoint(x: -(view.bounds.size.width/2)+100, y: view.bounds.size.height/2 - 30 )
+        playerInfoBgTexture1.size = CGSize(width: 348, height: 150)
+        addChild(playerInfoBgTexture1)
+        
+        let playerInfoAva1 = SKSpriteNode(imageNamed: "playerfix1")
+        playerInfoAva1.position = CGPoint(x: -(view.bounds.size.width/2)-10, y: view.bounds.size.height/2 - 30)
+        playerInfoAva1.size = CGSize(width: 82, height: 97)
+        addChild(playerInfoAva1)
+        
+        let coin1 = SKSpriteNode(imageNamed: "coin")
+        coin1.position = CGPoint(x: -(view.bounds.size.width/2)+80, y: view.bounds.size.height/2 - 50 )
+        coin1.size = CGSize(width: 51, height: 46)
+        addChild(coin1)
+        
+        let playerName1 = SKLabelNode()
+        playerName1.position = CGPoint(x: -(view.bounds.size.width/2)+120, y: view.bounds.size.height/2 - 10)
+        playerName1.color = .black
+        playerName1.text = "PLAYER 1"
+        addChild(playerName1)
+        
+        playerCoin1.position = CGPoint(x: -(view.bounds.size.width/2)+150, y: view.bounds.size.height/2 - 65)
+        playerCoin1.color = .black
+        playerCoin1.text = "\(playersDataArray[0].currentPoin)"
+        addChild(playerCoin1)
+//        current state player 2
+        
+        let playerInfoBgTexture2 = SKSpriteNode(imageNamed: "background_player_info")
+        playerInfoBgTexture2.position = CGPoint(x: (view.bounds.size.width/2)+100-200, y: view.bounds.size.height/2 - 30 )
+        playerInfoBgTexture2.size = CGSize(width: 348, height: 150)
+        addChild(playerInfoBgTexture2)
+        
+        let playerInfoAva2 = SKSpriteNode(imageNamed: "playerfix2")
+        playerInfoAva2.position = CGPoint(x: (view.bounds.size.width/2)-10-200, y: view.bounds.size.height/2 - 30)
+        playerInfoAva2.size = CGSize(width: 82, height: 97)
+        addChild(playerInfoAva2)
+        
+        let coin2 = SKSpriteNode(imageNamed: "coin")
+        coin2.position = CGPoint(x: (view.bounds.size.width/2)+80-200, y: view.bounds.size.height/2 - 50 )
+        coin2.size = CGSize(width: 51, height: 46)
+        addChild(coin2)
+        
+        let playerName2 = SKLabelNode()
+        playerName2.position = CGPoint(x: (view.bounds.size.width/2)+120-200, y: view.bounds.size.height/2 - 10)
+        playerName2.color = .black
+        playerName2.text = "PLAYER 2"
+        addChild(playerName2)
+        
+        playerCoin2.position = CGPoint(x: (view.bounds.size.width/2)+150-200, y: view.bounds.size.height/2 - 65)
+        playerCoin2.color = .black
+        playerCoin2.text = "\(playersDataArray[1].currentPoin)"
+        addChild(playerCoin2)
+        
+//        current state 3
+        
+        let playerInfoBgTexture3 = SKSpriteNode(imageNamed: "background_player_info")
+        playerInfoBgTexture3.position = CGPoint(x: (view.bounds.size.width/2)+100-200, y: -(view.bounds.size.height/2 - 30 ))
+        playerInfoBgTexture3.size = CGSize(width: 348, height: 150)
+        addChild(playerInfoBgTexture3)
+        
+        let playerInfoAva3 = SKSpriteNode(imageNamed: "playerfix3")
+        playerInfoAva3.position = CGPoint(x: (view.bounds.size.width/2)-10-200, y: -(view.bounds.size.height/2 - 30))
+        playerInfoAva3.size = CGSize(width: 82, height: 97)
+        addChild(playerInfoAva3)
+        
+        let coin3 = SKSpriteNode(imageNamed: "coin")
+        coin3.position = CGPoint(x: (view.bounds.size.width/2)+80-200, y: -(view.bounds.size.height/2 - 50 ))
+        coin3.size = CGSize(width: 51, height: 46)
+        addChild(coin3)
+        
+        let playerName3 = SKLabelNode()
+        playerName3.position = CGPoint(x: (view.bounds.size.width/2)+120-200, y: -(view.bounds.size.height/2 - 10))
+        playerName3.color = .black
+        playerName3.text = "PLAYER 3"
+        addChild(playerName3)
+        
+        playerCoin3.position = CGPoint(x: (view.bounds.size.width/2)+150-200, y: -(view.bounds.size.height/2 - 65))
+        playerCoin3.color = .black
+        playerCoin3.text = "\(playersDataArray[2].currentPoin)"
+        addChild(playerCoin3)
+        
+//        current player4 initiation
+        
+        let playerInfoBgTexture4 = SKSpriteNode(imageNamed: "background_player_info")
+        playerInfoBgTexture4.position = CGPoint(x: -((view.bounds.size.width/2)+100-200), y: -(view.bounds.size.height/2 - 30 ))
+        playerInfoBgTexture4.size = CGSize(width: 348, height: 150)
+        addChild(playerInfoBgTexture4)
+        
+        let playerInfoAva4 = SKSpriteNode(imageNamed: "playerfix3")
+        playerInfoAva4.position = CGPoint(x: -((view.bounds.size.width/2)-10-200), y: -(view.bounds.size.height/2 - 30))
+        playerInfoAva4.size = CGSize(width: 82, height: 97)
+        addChild(playerInfoAva4)
+        
+        let coin4 = SKSpriteNode(imageNamed: "coin")
+        coin4.position = CGPoint(x: -((view.bounds.size.width/2)+80-200), y: -(view.bounds.size.height/2 - 50 ))
+        coin4.size = CGSize(width: 51, height: 46)
+        addChild(coin4)
+        
+        let playerName4 = SKLabelNode()
+        playerName4.position = CGPoint(x: -((view.bounds.size.width/2)+120-200), y: -(view.bounds.size.height/2 - 10))
+        playerName4.color = .black
+        playerName4.text = "PLAYER 4"
+        addChild(playerName4)
+        
+        playerCoin4.position = CGPoint(x: -((view.bounds.size.width/2)+150-200), y: -(view.bounds.size.height/2 - 65))
+        playerCoin4.color = .black
+        playerCoin4.text = "\(playersDataArray[2].currentPoin)"
+        addChild(playerCoin4)
+        
+        
+
+
+        
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
         let background = SKSpriteNode(imageNamed: "mini2")
         background.position = CGPoint(x: 0, y: 0)
         background.size = self.size
         background.zPosition = -1
         addChild(background)
+        
+        
         
         let boardNode = SKNode()
         addChild(boardNode)
@@ -127,7 +253,7 @@ class GameScene: SKScene {
         
         //------------------------------------BOARD CARD INITIATION--------------------------------------
         for _ in 0..<25 {
-            let tileNode = SKSpriteNode(color: .black, size: CGSize(width: tileWidth, height: tileHeight))
+            let tileNode = SKSpriteNode(color: transparant, size: CGSize(width: tileWidth, height: tileHeight))
             boardNode.addChild(tileNode)
             boardNodes.append(tileNode)
         }
@@ -239,14 +365,18 @@ class GameScene: SKScene {
                 self?.diceButton?.run(SKAction.setTexture(diceButtonTexture), completion: { [self] in
                     if count == 6 {
                         self!.diceNumberFix = diceNumber
-                        var move = playersDataArray[self!.currentPlayerIndex].currentSteps + self!.diceNumberFix//
+//                        var move = playersDataArray[self!.currentPlayerIndex].currentSteps + self!.diceNumberFix//
+//                        playersDataArray[self!.currentPlayerIndex].currentSteps = move
+                        var move = playersDataArray[self!.currentPlayerIndex].currentSteps + 4
                         playersDataArray[self!.currentPlayerIndex].currentSteps = move
+                        
+                        print ("current move = \(move)")
                         
                         if move >= 25 {
                             move = move - 25
-                            currentPlayer.currentPoin = currentPlayer.currentPoin + 150
+                            playersDataArray[self!.currentPlayerIndex].currentPoin = playersDataArray[self!.currentPlayerIndex].currentPoin + 150
                         }
-                        self!.movePiece(currentPlayer.pieceNode, toTile: move)
+                        self!.movePiece(playersDataArray[self!.currentPlayerIndex].pieceNode, toTile: move)
                         //                         if cardArray[move].cardChallengesType == "SafeHouse" {
                         //                             self!.skipCount -= 1
                         //                             if self!.skipCount != 0 {
@@ -261,14 +391,17 @@ class GameScene: SKScene {
                         //                             self!.movePiece(currentPlayer.pieceNode, toTile: move)
                         //                         }
                         
-                        currentPlayer.currentPoin = self!.gameRules(move: move, coin: currentPlayer.currentPoin, player: currentPlayer.playersName)
-                        print("namanya: \(currentPlayer.playersName), dan poinnya: \(currentPlayer.currentPoin)")
+//                        playersDataArray[self!.currentPlayerIndex].currentPoin = self!.gameRules(move: move, coin: playersDataArray[self!.currentPlayerIndex].currentPoin, player: playersDataArray[self!.currentPlayerIndex].playersName)
+                        print("namanya: \(playersDataArray[self!.currentPlayerIndex].playersName), dan poinnya: \(playersDataArray[self!.currentPlayerIndex].currentPoin)")
                         
                         self!.currentPlayerIndex += 1
                         if self!.currentPlayerIndex >= playersDataArray.count {
                             self!.currentPlayerIndex = 0
                         }
+                        print("lewat sini")
+                        print("current player index diatas = \(self!.currentPlayerIndex)")
                         self?.countShown = 0
+                        
                     }
                 })
             }
@@ -542,6 +675,144 @@ class GameScene: SKScene {
         popUpContainer?.addChild(circleNode4!)
         popUpContainer?.addChild(circleNode5!)
     }
+    
+    
+    func addPopUpContainerIfOwned() {
+        diceButton?.position = CGPoint(x: 1000, y: 0)
+        
+        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 600))
+        popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        popUpContainer?.zPosition = 1
+        
+        //background for popUpContainer
+        let cornerRadius = CGFloat(50)
+        let roundedRect = CGRect(x: -popUpContainer!.size.width / 2, y: -popUpContainer!.size.height / 2, width: popUpContainer!.size.width, height: popUpContainer!.size.height)
+        let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
+        let shape = SKShapeNode(path: path.cgPath)
+        shape.fillColor = UIColor(red: 203/255, green: 218/255, blue: 224/255, alpha: 100)
+        popUpContainer?.addChild(shape)
+        
+        //title
+        let titleLabel = SKLabelNode(text: "2 TRUTH 1 LIE")
+        titleLabel.fontName = "AvenirNext-Bold"
+        titleLabel.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        titleLabel.fontSize = 55
+        titleLabel.position = CGPoint(x: 0, y: 220)
+        
+        //next button
+        buttonFrame = SKShapeNode(rectOf: CGSize(width: 300, height: 85), cornerRadius: 40)
+        buttonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        buttonFrame?.position = CGPoint(x: 0, y: -220)
+        
+        buttonLabel = SKLabelNode(text: "NEXT")
+        buttonLabel?.fontName = "AvenirNext-Bold"
+        buttonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        buttonLabel?.fontSize = 50
+        buttonLabel?.position = CGPoint(x: 0, y: -19)
+        
+        //first text field
+        let textFieldFrame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 600, height: 70))
+        textField = UITextField(frame: textFieldFrame)
+        textField?.backgroundColor = UIColor.white
+        textField?.placeholder = "Enter your prompt"
+        textField?.layer.cornerRadius = textFieldFrame.size.height / 2
+        
+        
+        let textLabelFrame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 600, height: 70))
+        textLabel = UILabel(frame: textLabelFrame)
+        textLabel?.backgroundColor = UIColor.white
+        textLabel?.layer.cornerRadius = textFieldFrame.size.height
+        textLabel?.text = "\(cardArray[move].firstPrompt)"
+//
+//        let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textLabelFrame.size.height))
+//        textLabel.leftView = leftPaddingView
+//        textLabel.leftViewMode = .always
+        
+        
+//        let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
+//        textField?.leftView = leftPaddingView
+//        textField?.leftViewMode = .always
+        
+        circleNode3 = SKShapeNode(circleOfRadius: 40)
+        circleNode3?.fillColor = UIColor.white
+        circleNode3?.lineWidth = 2
+        circleNode3?.position = CGPoint(x: -370, y: 132)
+        
+        let textLabel2Frame = CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: 600, height: 70))
+        textLabel2 = UILabel(frame: textLabel2Frame)
+        textLabel2?.backgroundColor = UIColor.white
+        textLabel2?.layer.cornerRadius = textLabel2Frame.size.height / 2
+        textLabel?.text = "\(cardArray[move].secondPrompt)"
+        
+        
+        
+        //second text field
+//        let textField2Frame = CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: 600, height: 70))
+//        textField2 = UITextField(frame: textField2Frame)
+//        textField2?.backgroundColor = UIColor.white
+//        textField2?.placeholder = "Enter your prompt"
+//        textField2?.layer.cornerRadius = textFieldFrame.size.height / 2
+//
+//        let leftPadding2View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
+//        textField2?.leftView = leftPadding2View
+//        textField2?.leftViewMode = .always
+        
+        circleNode4 = SKShapeNode(circleOfRadius: 40)
+        circleNode4?.fillColor = UIColor.white
+        circleNode4?.lineWidth = 2
+        circleNode4?.position = CGPoint(x: -370, y: 15)
+        
+        //third text field
+        let textField3Frame = CGRect(origin: CGPoint(x: 0, y: 200), size: CGSize(width: 600, height: 70))
+        textField3 = UITextField(frame: textField3Frame)
+        textField3?.backgroundColor = UIColor.white
+        textField3?.placeholder = "Enter your prompt"
+        textField3?.layer.cornerRadius = textFieldFrame.size.height / 2
+        
+        let textLabel3Frame = CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: 600, height: 70))
+        textLabel3 = UILabel(frame: textLabel3Frame)
+        textLabel3?.backgroundColor = UIColor.white
+        textLabel3?.layer.cornerRadius = textLabel3Frame.size.height / 2
+        textLabel3?.text = "\(cardArray[move].thirdPrompt)"
+        
+//        let leftPadding3View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
+//        textField3?.leftView = leftPadding3View
+//        textField3?.leftViewMode = .always
+        
+        circleNode5 = SKShapeNode(circleOfRadius: 40)
+        circleNode5?.fillColor = UIColor.white
+        circleNode5?.lineWidth = 2
+        circleNode5?.position = CGPoint(x: -370, y: -103)
+        
+        //frame for text field
+        let sceneFrame = CGRect(origin: .zero, size: CGSize(width: 520, height: 300))
+        let scene = SKScene(size: sceneFrame.size)
+        scene.backgroundColor = UIColor(red: 203/255, green: 218/255, blue: 224/255, alpha: 100)
+        scene.view?.layer.cornerRadius = textFieldFrame.size.height / 2
+        
+        skView = SKView(frame: sceneFrame)
+        skView?.addSubview(textField!)
+        skView?.addSubview(textField2!)
+        skView?.addSubview(textField3!)
+        skView?.presentScene(scene)
+        
+        if let view = self.view {
+            skView?.center = view.center
+            view.addSubview(skView!)
+            popUpContainer?.inputView?.addSubview(skView!)
+        }
+        
+        addChild(popUpContainer!)
+        buttonFrame?.addChild(buttonLabel!)
+        popUpContainer?.addChild(buttonFrame!)
+        popUpContainer?.addChild(titleLabel)
+        popUpContainer?.addChild(circleNode3!)
+        popUpContainer?.addChild(circleNode4!)
+        popUpContainer?.addChild(circleNode5!)
+    }
+    
+    
+    
     
     func addPopUpContainer2() {
         diceButton?.position = CGPoint(x: 1000, y: 0)
@@ -873,46 +1144,221 @@ class GameScene: SKScene {
     
     override func didEvaluateActions() {
         var objPosition = myObject.objPosition
-        playersDataArray[move].currentSteps
+        var cardNode : Int = 0
+        var lastOwnerIndex : Int = 0
+        var currentPlayerIndexForPopUp : Int = 0
+        if currentPlayerIndex != 0 {
+            currentPlayerIndexForPopUp = currentPlayerIndex - 1
+        }
+        else {
+            currentPlayerIndexForPopUp = 3
+        }
+        
+//        let targetPosition = boardNodes[tileNode].position
+        
+        for i in 0...24 {
+            if boardNodes[i].position == objPosition {
+                cardNode = i
+//                print("ketemu \(i)")
+            }
+        }
+
         
         if ((objPosition.x == 510 && objPosition.y == 120) || (objPosition.x == 70 && objPosition.y == -150) || (objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
-
             challengeName = "2 Truth 1 Lie"
-            addBuyOfferPopUp()
+            print("capek cardNode = \(cardNode) & currentPlayerIndexForPopUp \(currentPlayerIndexForPopUp)")
+            if cardArray[cardNode].cardOwner != playersDataArray[currentPlayerIndexForPopUp].playersName {
+                print("owner \(cardArray[cardNode].cardOwner)")
+//                addBuyOfferPopUp()
+                if cardArray[cardNode].cardOwner == "Null" {
+                    let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                        self?.buy = true
+//                        self?.addPopUpContainer()  //2t1l
+                        print("field \(cardNode) owner  = \(cardArray[cardNode].cardOwner)")
+                        cardArray[cardNode].cardOwner = playersDataArray[currentPlayerIndexForPopUp].playersName
+                        print("field \(cardNode) owner  = \(cardArray[cardNode].cardOwner)")
+                        print("field CHallenge = \(cardArray[cardNode].cardChallengesType)")
+                        playersDataArray[currentPlayerIndexForPopUp].currentPoin -= 150
+                        self!.playerCoin1.text = "\(playersDataArray[currentPlayerIndexForPopUp].currentPoin)"
+                    }
+    
+                    let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                        self?.buy = false
+                        //                self?.countShown = 1
+                    }
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+    
+                    view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+                }
+                else {
+                    let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                        self?.buy = true
+//                        self?.addPopUpContainerIfOwned()  //buat tampilan untuk pop up pertanyaan sebelumnya untuk 2T1L
+                        for i in 0...playersDataArray.count - 1 {
+//                            print("i = \(i)")
+//                            print("cardNode \(cardNode)")
+                            if cardArray[cardNode].cardOwner == playersDataArray[i].playersName {
+                                lastOwnerIndex = i
+                                
+                            }
+                        }
+                        print("pemilik sebelum = \(playersDataArray[lastOwnerIndex].currentPoin), pemilik terbaru = \(playersDataArray[currentPlayerIndexForPopUp].currentPoin)")
+                        cardArray[cardNode].cardOwner = playersDataArray[currentPlayerIndexForPopUp].playersName
+                        playersDataArray[currentPlayerIndexForPopUp].currentPoin -= 200 //check lagi ngurangin berapa di rules
+                        playersDataArray[lastOwnerIndex].currentPoin += 200
+                        print("UPDATE pemilik sebelum = \(playersDataArray[lastOwnerIndex].currentPoin), pemilik terbaru = \(playersDataArray[currentPlayerIndexForPopUp].currentPoin)")
+                        self!.playerCoin1.text = "\(playersDataArray[currentPlayerIndexForPopUp].currentPoin)"
+                        
+                    }
+    
+                    let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                        self?.buy = false
+//                        self?.addPopUpContainerIfOwned()
+                        //                self?.countShown = 1
+                    }
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+    
+                    view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+
+                }
+            }
+
             countShown = 1
-            
-//            else { // kalau udah ada yang punya
-//                let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
-//
-//                let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
-//                    self?.buy = true
-//                    self?.addPopUpContainer()  //2t1l
-//                    cardArray[self!.move].cardOwner = playersDataArray[self!.currentPlayerIndex].playersName
-//                    playersDataArray[self!.currentPlayerIndex].currentPoin -= 150
-//                }
-//
-//                let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
-//                    self?.buy = false
-//                    //                self?.countShown = 1
-//                }
-//                alertController.addAction(yesAction)
-//                alertController.addAction(noAction)
-//
-//                view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-//
-//                countShown = 1
-//            }
             
         } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240) || (objPosition.x == -470 && objPosition.y == 40)) && countShown == 0 {
             
+            
+            
             challengeName = "Would You Rather"
-            addBuyOfferPopUp()
+//            addBuyOfferPopUp()
+            
+            if cardArray[cardNode].cardOwner != playersDataArray[currentPlayerIndexForPopUp].playersName {
+                print("owner \(cardArray[cardNode].cardOwner)")
+//                addBuyOfferPopUp()
+                if cardArray[cardNode].cardOwner == "Null" {
+                    let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                        self?.buy = true
+//                        self?.addPopUpContainer()  //2t1l
+                        print("field \(cardNode) owner  = \(cardArray[cardNode].cardOwner)")
+                        cardArray[cardNode].cardOwner = playersDataArray[currentPlayerIndexForPopUp].playersName
+                        print("field \(cardNode) owner  = \(cardArray[cardNode].cardOwner)")
+                        print("field CHallenge = \(cardArray[cardNode].cardChallengesType)")
+                        playersDataArray[currentPlayerIndexForPopUp].currentPoin -= 150
+                    }
+    
+                    let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                        self?.buy = false
+                        //                self?.countShown = 1
+                    }
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+    
+                    view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+                }
+                else {
+                    let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                        self?.buy = true
+//                        self?.addPopUpContainerIfOwned()  //buat tampilan untuk pop up pertanyaan sebelumnya untuk 2T1L
+                        for i in 0...playersDataArray.count - 1 {
+//                            print("i = \(i)")
+//                            print("cardNode \(cardNode)")
+                            if cardArray[cardNode].cardOwner == playersDataArray[i].playersName {
+                                lastOwnerIndex = i
+                                
+                            }
+                        }
+                        print("pemilik sebelum = \(playersDataArray[lastOwnerIndex].currentPoin), pemilik terbaru = \(playersDataArray[currentPlayerIndexForPopUp].currentPoin)")
+                        cardArray[cardNode].cardOwner = playersDataArray[currentPlayerIndexForPopUp].playersName
+                        playersDataArray[currentPlayerIndexForPopUp].currentPoin -= 200 //check lagi ngurangin berapa di rules
+                        playersDataArray[lastOwnerIndex].currentPoin += 200
+                        print("UPDATE pemilik sebelum = \(playersDataArray[lastOwnerIndex].currentPoin), pemilik terbaru = \(playersDataArray[currentPlayerIndexForPopUp].currentPoin)")
+                        
+                    }
+    
+                    let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                        self?.buy = false
+//                        self?.addPopUpContainerIfOwned()
+                        //                self?.countShown = 1
+                    }
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+    
+                    view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+
+                }
+            }
+
             countShown = 1
             
-        } else if ((objPosition.x == 420 && objPosition.y == 80) || (objPosition.x == 60 && objPosition.y == -130) || (objPosition.x == -270 && objPosition.y == -240) || (objPosition.x == -355 && objPosition.y == -205) || (objPosition.x == -80 && objPosition.y == 240)) && countShown == 0 {
+        }
+        else if ((objPosition.x == 420 && objPosition.y == 80) || (objPosition.x == 60 && objPosition.y == -130) || (objPosition.x == -270 && objPosition.y == -240) || (objPosition.x == -355 && objPosition.y == -205) || (objPosition.x == -80 && objPosition.y == 240)) && countShown == 0 {
             
             challengeName = "Truth or Dare"
-            addBuyOfferPopUp()
+//            addBuyOfferPopUp()
+            if cardArray[cardNode].cardOwner != playersDataArray[currentPlayerIndexForPopUp].playersName {
+                print("owner \(cardArray[cardNode].cardOwner)")
+//                addBuyOfferPopUp()
+                if cardArray[cardNode].cardOwner == "Null" {
+                    let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                        self?.buy = true
+//                        self?.addPopUpContainer()  //2t1l
+                        print("field \(cardNode) owner  = \(cardArray[cardNode].cardOwner)")
+                        cardArray[cardNode].cardOwner = playersDataArray[currentPlayerIndexForPopUp].playersName
+                        print("field \(cardNode) owner  = \(cardArray[cardNode].cardOwner)")
+                        print("field CHallenge = \(cardArray[cardNode].cardChallengesType)")
+                        playersDataArray[currentPlayerIndexForPopUp].currentPoin -= 150
+                    }
+    
+                    let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                        self?.buy = false
+                        //                self?.countShown = 1
+                    }
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+    
+                    view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+                }
+                else {
+                    let alertController = UIAlertController(title: "YOU LANDED ON", message: challengeName, preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Buy", style: .default) { [weak self] (_) in
+                        self?.buy = true
+//                        self?.addPopUpContainerIfOwned()  //buat tampilan untuk pop up pertanyaan sebelumnya untuk 2T1L
+                        for i in 0...playersDataArray.count - 1 {
+//                            print("i = \(i)")
+//                            print("cardNode \(cardNode)")
+                            if cardArray[cardNode].cardOwner == playersDataArray[i].playersName {
+                                lastOwnerIndex = i
+                                
+                            }
+                        }
+                        print("pemilik sebelum = \(playersDataArray[lastOwnerIndex].currentPoin), pemilik terbaru = \(playersDataArray[currentPlayerIndexForPopUp].currentPoin)")
+                        cardArray[cardNode].cardOwner = playersDataArray[currentPlayerIndexForPopUp].playersName
+                        playersDataArray[currentPlayerIndexForPopUp].currentPoin -= 200 //check lagi ngurangin berapa di rules
+                        playersDataArray[lastOwnerIndex].currentPoin += 200
+                        print("UPDATE pemilik sebelum = \(playersDataArray[lastOwnerIndex].currentPoin), pemilik terbaru = \(playersDataArray[currentPlayerIndexForPopUp].currentPoin)")
+                        
+                    }
+    
+                    let noAction = UIAlertAction(title: "Skip", style: .cancel) { [weak self] (_) in
+                        self?.buy = false
+//                        self?.addPopUpContainerIfOwned()
+                        //                self?.countShown = 1
+                    }
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+    
+                    view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+
+                }
+            }
+
             countShown = 1
             
         } else if ((objPosition.x == 380 && objPosition.y == -180) || (objPosition.x == 320 && objPosition.y == 110) || (objPosition.x == -90 && objPosition.y == -250) || (objPosition.x == -425 && objPosition.y == -135) || (objPosition.x == -360 && objPosition.y == 200) || (objPosition.x == 10 && objPosition.y == 180)) && countShown == 0 {
