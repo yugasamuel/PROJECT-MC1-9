@@ -71,6 +71,8 @@ class GameScene: SKScene {
     private var truthButtonFrame: SKShapeNode?
     private var dareButtonLabel: SKLabelNode?
     private var dareButtonFrame: SKShapeNode?
+    private var mainMenuButtonFrame: SKShapeNode?
+    private var mainMenuButtonLabel: SKLabelNode?
     
     private var skView: SKView?
     
@@ -111,6 +113,9 @@ class GameScene: SKScene {
     private var popUpContainerAppeared: Bool = false
     private var popUpContainer2Appeared: Bool = false
     private var popUpContainer3Appeared: Bool = false
+    private var leaderboardPopUpAppeared: Bool = false
+    
+    private var overlayNode: SKSpriteNode?
     
     override func didMove(to view: SKView) {
         //-----------------------------------BACKGROUND INITIATION--------------------------------------
@@ -176,11 +181,8 @@ class GameScene: SKScene {
         diceButton?.position = CGPoint(x: -180, y: 0)
         addChild(diceButton!)
         
-        // ------------------------------------POP UP CONTAINER----------------------------------------------
-        // ada method sendiri di bawah
-        
-        // ------------------------------------TEXT FIELDCONTAINER-------------------------------------------
-        
+        addOverlay()
+        addLeaderboardPopUp()
     }
     
     // --------------------------------FUNC TO MOVE OBJECT--------------------------------------------------
@@ -273,6 +275,7 @@ class GameScene: SKScene {
             popUpContainerAppeared = false
             popUpContainer2Appeared = false
             popUpContainer3Appeared = false
+            overlayNode?.isHidden = true
             
             removePopUpContainer()
             
@@ -303,7 +306,7 @@ class GameScene: SKScene {
 //            print(selectedPrompt)
 //            print(cardArray[self.move].correctPrompt)
             
-        } else if circleNode?.contains(touchLocation) == true {
+        } else if circleNode?.contains(touchLocation) == true && popUpContainer2Appeared == true {
             firstCircleClicked.toggle()
             selectedPrompt = "firstPrompt"
             
@@ -321,7 +324,7 @@ class GameScene: SKScene {
             circleNode2?.fillColor = UIColor.white
             secondCircleClicked = false
             
-        } else if circleNode2?.contains(touchLocation) == true {
+        } else if circleNode2?.contains(touchLocation) == true && popUpContainer2Appeared == true {
             secondCircleClicked.toggle()
             selectedPrompt = "secondPrompt"
             
@@ -339,7 +342,7 @@ class GameScene: SKScene {
             circleNode?.fillColor = UIColor.white
             firstCircleClicked = false
             
-        } else if circleNode3?.contains(touchLocation) == true {
+        } else if circleNode3?.contains(touchLocation) == true && popUpContainerAppeared == true {
             thirdCircleClicked.toggle()
             selectedPrompt = "firstPrompt"
             
@@ -348,7 +351,7 @@ class GameScene: SKScene {
             lieLabel?.fontName = "AvenirNext-Bold"
             lieLabel?.fontColor = .white
             lieLabel?.fontSize = 30
-            lieLabel?.position = CGPoint(x: 0, y: -10)
+            lieLabel?.position = CGPoint(x: 0, y: -12)
             
             lieLabel?.removeFromParent()
             circleNode3?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
@@ -360,7 +363,7 @@ class GameScene: SKScene {
             fourthCircleClicked = false
             fifthCircleClicked = false
             
-        } else if circleNode4?.contains(touchLocation) == true {
+        } else if circleNode4?.contains(touchLocation) == true && popUpContainerAppeared == true {
             fourthCircleClicked.toggle()
             selectedPrompt = "secondPrompt"
             
@@ -369,7 +372,7 @@ class GameScene: SKScene {
             lieLabel?.fontName = "AvenirNext-Bold"
             lieLabel?.fontColor = .white
             lieLabel?.fontSize = 30
-            lieLabel?.position = CGPoint(x: 0, y: -10)
+            lieLabel?.position = CGPoint(x: 0, y: -12)
             
             lieLabel?.removeFromParent()
             circleNode4?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
@@ -381,7 +384,7 @@ class GameScene: SKScene {
             thirdCircleClicked = false
             fifthCircleClicked = false
             
-        } else if circleNode5?.contains(touchLocation) == true {
+        } else if circleNode5?.contains(touchLocation) == true && popUpContainerAppeared == true {
             fifthCircleClicked.toggle()
             selectedPrompt = "thirdPrompt"
             
@@ -390,7 +393,7 @@ class GameScene: SKScene {
             lieLabel?.fontName = "AvenirNext-Bold"
             lieLabel?.fontColor = .white
             lieLabel?.fontSize = 30
-            lieLabel?.position = CGPoint(x: 0, y: -10)
+            lieLabel?.position = CGPoint(x: 0, y: -12)
             
             lieLabel?.removeFromParent()
             circleNode5?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
@@ -429,9 +432,17 @@ class GameScene: SKScene {
             diceClicked = false
             challengePopUpAppeared = false
             buyPopUpAppeared = false
+            overlayNode?.isHidden = true
+            
             removePopUpContainer()
             
             buy = false
+        } else if mainMenuButtonFrame?.contains(touchLocation) == true && leaderboardPopUpAppeared == true {
+            //back to main menu
+            leaderboardPopUpAppeared = false
+            diceClicked = false
+            overlayNode?.isHidden = true
+            removePopUpContainer()
         }
 
     }
@@ -475,6 +486,7 @@ class GameScene: SKScene {
         textField?.backgroundColor = UIColor.white
         textField?.placeholder = "Enter your prompt"
         textField?.layer.cornerRadius = textFieldFrame.size.height / 2
+        textField?.autocorrectionType = .no
         
         let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField?.leftView = leftPaddingView
@@ -491,6 +503,7 @@ class GameScene: SKScene {
         textField2?.backgroundColor = UIColor.white
         textField2?.placeholder = "Enter your prompt"
         textField2?.layer.cornerRadius = textFieldFrame.size.height / 2
+        textField2?.autocorrectionType = .no
         
         let leftPadding2View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField2?.leftView = leftPadding2View
@@ -507,6 +520,7 @@ class GameScene: SKScene {
         textField3?.backgroundColor = UIColor.white
         textField3?.placeholder = "Enter your prompt"
         textField3?.layer.cornerRadius = textFieldFrame.size.height / 2
+        textField3?.autocorrectionType = .no
         
         let leftPadding3View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField3?.leftView = leftPadding3View
@@ -583,6 +597,7 @@ class GameScene: SKScene {
         textField?.backgroundColor = UIColor.white
         textField?.placeholder = "Enter your prompt"
         textField?.layer.cornerRadius = textFieldFrame.size.height / 2
+        textField?.autocorrectionType = .no
         
         let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField?.leftView = leftPaddingView
@@ -599,6 +614,7 @@ class GameScene: SKScene {
         textField2?.backgroundColor = UIColor.white
         textField2?.placeholder = "Enter your prompt"
         textField2?.layer.cornerRadius = textFieldFrame.size.height / 2
+        textField2?.autocorrectionType = .no
         
         let leftPadding2View = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField2?.leftView = leftPadding2View
@@ -673,6 +689,7 @@ class GameScene: SKScene {
         textField?.backgroundColor = UIColor.white
         textField?.placeholder = "Enter your prompt"
         textField?.layer.cornerRadius = textFieldFrame.size.height / 2
+        textField?.autocorrectionType = .no
         
         let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textFieldFrame.size.height))
         textField?.leftView = leftPaddingView
@@ -700,7 +717,7 @@ class GameScene: SKScene {
         popUpContainer?.addChild(buttonFrame!)
     }
     
-    func addBuyOfferPopUp() {
+    func addBuyOfferPopUp(challengeName: String, buyCost: Int) {
         buyPopUpAppeared = true
         
         popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 1000, height: 350))
@@ -744,7 +761,7 @@ class GameScene: SKScene {
         buyButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
         buyButtonFrame?.position = CGPoint(x: -160, y: -82)
         
-        buyButtonLabel = SKLabelNode(text: "BUY      180")
+        buyButtonLabel = SKLabelNode(text: "BUY      \(buyCost)")
         buyButtonLabel?.fontName = "AvenirNext-Bold"
         buyButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
         buyButtonLabel?.fontSize = 50
@@ -879,25 +896,106 @@ class GameScene: SKScene {
         popUpContainer = nil
     }
     
+    func addOverlay() {
+        overlayNode = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.3), size: self.size)
+        overlayNode?.zPosition = 0
+        overlayNode?.isHidden = true
+        addChild(overlayNode!)
+    }
+    
+    func addLeaderboardPopUp() {
+        leaderboardPopUpAppeared = true
+        
+        let firstPlaceImage: SKSpriteNode?
+        let secondPlaceImage: SKSpriteNode?
+        let thirdPlaceImage: SKSpriteNode?
+        let fourthPlaceImage: SKSpriteNode?
+        
+        popUpContainer = SKSpriteNode(color: UIColor(red: 1, green: 1, blue: 1, alpha: 0), size: CGSize(width: 840, height: 650))
+        popUpContainer?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        popUpContainer?.zPosition = 1
+        
+        //background for popUpContainer
+        let cornerRadius = CGFloat(50)
+        let roundedRect = CGRect(x: -popUpContainer!.size.width / 2, y: -popUpContainer!.size.height / 2, width: popUpContainer!.size.width, height: popUpContainer!.size.height)
+        let path = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
+        let shape = SKShapeNode(path: path.cgPath)
+        shape.fillColor = UIColor(red: 203/255, green: 218/255, blue: 224/255, alpha: 100)
+        popUpContainer?.addChild(shape)
+        
+        //title
+        let titleLabel = SKLabelNode(text: "PLAYERS RANK")
+        titleLabel.fontName = "AvenirNext-Bold"
+        titleLabel.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        titleLabel.fontSize = 55
+        titleLabel.position = CGPoint(x: 0, y: 235)
+        
+        //next button
+        mainMenuButtonFrame = SKShapeNode(rectOf: CGSize(width: 450, height: 85), cornerRadius: 40)
+        mainMenuButtonFrame?.fillColor = UIColor(red: 85/255, green: 197/255, blue: 149/255, alpha: 100)
+        mainMenuButtonFrame?.position = CGPoint(x: 0, y: -225)
+        
+        mainMenuButtonLabel = SKLabelNode(text: "PLAY AGAIN")
+        mainMenuButtonLabel?.fontName = "AvenirNext-Bold"
+        mainMenuButtonLabel?.fontColor = UIColor(red: 33/255, green: 82/255, blue: 115/255, alpha: 100)
+        mainMenuButtonLabel?.fontSize = 50
+        mainMenuButtonLabel?.position = CGPoint(x: 0, y: -241)
+        
+        //leaderboard image
+        let leaderboardImage = SKSpriteNode(imageNamed: "Leaderboard")
+        leaderboardImage.position = CGPoint(x: 0, y: -10)
+        leaderboardImage.zPosition = 10
+        
+        //set player images
+        firstPlaceImage = SKSpriteNode(imageNamed: "player1leaderboard")
+        firstPlaceImage?.position = CGPoint(x: 54, y: 155)
+        
+        secondPlaceImage = SKSpriteNode(imageNamed: "player2leaderboard")
+        secondPlaceImage?.position = CGPoint(x: -90, y: 110)
+        
+        thirdPlaceImage = SKSpriteNode(imageNamed: "player3leaderboard")
+        thirdPlaceImage?.position = CGPoint(x: -222, y: -15)
+        
+        fourthPlaceImage = SKSpriteNode(imageNamed: "player4leaderboard")
+        fourthPlaceImage?.position = CGPoint(x: 207, y: 45)
+        
+        addChild(popUpContainer!)
+        popUpContainer?.addChild(firstPlaceImage!)
+        popUpContainer?.addChild(secondPlaceImage!)
+        popUpContainer?.addChild(thirdPlaceImage!)
+        popUpContainer?.addChild(fourthPlaceImage!)
+        popUpContainer?.addChild(titleLabel)
+        popUpContainer?.addChild(mainMenuButtonLabel!)
+        popUpContainer?.addChild(mainMenuButtonFrame!)
+        popUpContainer?.addChild(leaderboardImage)
+    }
+    
     override func didEvaluateActions() {
         let objPosition = myObject.objPosition
+        
+        // butuh 1 override func lagi untuk pop up leaderboard
+        
+        if (buyPopUpAppeared == true || popUpContainerAppeared == true || popUpContainer2Appeared == true || popUpContainer3Appeared == true || challengePopUpAppeared == true || todPopUpAppeared == true || leaderboardPopUpAppeared == true) {
+            overlayNode?.isHidden = false
+        }
+        
         
         if ((objPosition.x == 450 && objPosition.y == -120) || (objPosition.x == 210 && objPosition.y == 60) || (objPosition.x == -470 && objPosition.y == 40) || (objPosition.x == -425 && objPosition.y == 135) || (objPosition.x == -170 && objPosition.y == 260)) && countShown == 0 {
 
             challengeName = "2 Truth 1 Lie"
-            addBuyOfferPopUp()
+            addBuyOfferPopUp(challengeName: challengeName, buyCost: 150)
             countShown = 1
             
         } else if ((objPosition.x == 470 && objPosition.y == 0) || (objPosition.x == 280 && objPosition.y == -170) || (objPosition.x == -10 && objPosition.y == -210) || (objPosition.x == -180 && objPosition.y == -270) || (objPosition.x == -270 && objPosition.y == 240)) && countShown == 0 {
             
             challengeName = "Would You Rather"
-            addBuyOfferPopUp()
+            addBuyOfferPopUp(challengeName: challengeName, buyCost: 120)
             countShown = 1
             
         } else if ((objPosition.x == 420 && objPosition.y == 80) || (objPosition.x == 60 && objPosition.y == -130) || (objPosition.x == -270 && objPosition.y == -240) || (objPosition.x == -355 && objPosition.y == -205) || (objPosition.x == -80 && objPosition.y == 240)) && countShown == 0 {
             
             challengeName = "Truth or Dare"
-            addBuyOfferPopUp()
+            addBuyOfferPopUp(challengeName: challengeName, buyCost: 180)
             countShown = 1
             
         } else if ((objPosition.x == 380 && objPosition.y == -180) || (objPosition.x == 320 && objPosition.y == 110) || (objPosition.x == -90 && objPosition.y == -250) || (objPosition.x == -425 && objPosition.y == -135) || (objPosition.x == -360 && objPosition.y == 200) || (objPosition.x == 10 && objPosition.y == 180)) && countShown == 0 {
@@ -933,7 +1031,6 @@ class GameScene: SKScene {
             diceClicked = false
             print("Nyampe Start")  //Start
             countShown = 1
-            
         }
     }
     
