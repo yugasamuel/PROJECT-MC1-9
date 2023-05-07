@@ -91,3 +91,10 @@ extension PlayersData {
         ]
     }
 }
+
+func addPlayer(name: String, steps: Int, poin: Int, pieceNode: SKSpriteNode) {
+    let newPlayerData = PlayersData(playersName: name, currentSteps: steps, currentPoin: poin, pieceNode: pieceNode)
+    playersDataArray.append(newPlayerData)
+}
+var cardArray = Card.cardData // inisiasi array
+var playersDataArray = PlayersData.sampleData // inisiasi array
